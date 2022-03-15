@@ -10,7 +10,9 @@ namespace Parser
     {
         public static async Task Main(string[] args)
         {
-            if(args.Length < 1)
+            Console.WriteLine("Starting parser...");
+
+            if (args.Length < 1)
             {
                 Console.WriteLine("Usage: WorkingPath");
                 Console.WriteLine("Current parameters:");
@@ -42,24 +44,24 @@ namespace Parser
             var shouldParse = baseFileInfo.Contains("creation_time");
             if (shouldParse)
             {
-                Console.WriteLine($"{filePath} will be parsed...\n\n");
+                Console.WriteLine($"{filePath} WILL be parsed!");
                 var fileInfo = new FileInfo(filePath);
                 var bareName = Path.GetFileNameWithoutExtension(filePath);
                 var newFileName = $"{fileInfo.Directory}{Path.DirectorySeparatorChar}{bareName}_parsed.mp4";
 
                 File.Delete(newFileName);
-                await RunCommand("ffmpeg", $@"-i ""{filePath}"" ""{newFileName}""", folder, redirectError: false);
+                await RunCommand("ffmpeg", $@"-i ""{filePath}"" ""{newFileName}""", folder, getOutput: false);
 
                 // Delete old file.
                 File.Delete(filePath);
             }
             else
             {
-                Console.WriteLine($"{filePath} don't have to be parsed...\n\n");
+                Console.WriteLine($"{filePath} don't have to be parsed...");
             }
         }
 
-        private static async Task<string> RunCommand(string bin, string arg, string path, bool redirectError = true)
+        private static async Task<string> RunCommand(string bin, string arg, string path, bool getOutput = true)
         {
             var p = new Process
             {
@@ -68,22 +70,22 @@ namespace Parser
                     FileName = bin,
                     Arguments = arg,
                     WorkingDirectory = path,
-                    UseShellExecute = !redirectError,
-                    RedirectStandardOutput = redirectError,
-                    RedirectStandardError = redirectError,
+                    UseShellExecute = !getOutput,
+                    RedirectStandardOutput = getOutput,
+                    RedirectStandardError = getOutput,
                 }
             };
             p.Start();
             p.WaitForExit();
-            var output = await p.StandardOutput.ReadToEndAsync();
-            if (redirectError)
+            if (getOutput)
             {
+                var output = await p.StandardOutput.ReadToEndAsync();
                 var error = await p.StandardError.ReadToEndAsync();
                 return !string.IsNullOrWhiteSpace(output) ? output : error;
             }
             else
             {
-                return output;
+                return string.Empty;
             }
         }
     }
