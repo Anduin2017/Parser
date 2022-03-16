@@ -41,7 +41,7 @@ namespace Parser
         {
             var folder = Path.GetDirectoryName(filePath) ?? throw new Exception($"{filePath} is invalid!");
             var baseFileInfo = await RunCommand("ffmpeg.exe", $@"-i ""{filePath}""", folder);
-            var shouldParse = baseFileInfo.Contains("creation_time");
+            var shouldParse = baseFileInfo.Contains("creation_time") || !filePath.EndsWith(".mp4");
             if (shouldParse)
             {
                 Console.WriteLine($"{filePath} WILL be parsed!");
