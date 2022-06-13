@@ -56,13 +56,16 @@ namespace Parser
         {
             var folder = Path.GetDirectoryName(filePath) ?? throw new Exception($"{filePath} is invalid!");
             var baseFileInfo = await _commandService.RunCommand("ffmpeg.exe", $@"-i ""{filePath}""", folder);
-            var shouldParse = baseFileInfo.Contains("creation_time") || !filePath.EndsWith(".mp4");
+            var shouldParse = 
+                !baseFileInfo.Contains("Video: hevc") ||  // Not HEVC
+                baseFileInfo.Contains("creation_time") || // Or contains privacy info
+                !filePath.EndsWith(".mp4"); // Or not MP4
             if (shouldParse)
             {
                 Console.WriteLine($"{filePath} WILL be parsed!");
                 var fileInfo = new FileInfo(filePath);
                 var bareName = Path.GetFileNameWithoutExtension(filePath);
-                var newFileName = $"{fileInfo.Directory}{Path.DirectorySeparatorChar}{bareName}_parsed.mp4";
+                var newFileName = $"{fileInfo.Directory}{Path.DirectorySeparatorChar}{bareName}_265.mp4";
 
                 File.Delete(newFileName);
                 await _commandService.RunCommand("ffmpeg", $@"-i ""{filePath}"" -codec:a copy -codec:v libx265 ""{newFileName}""", folder, getOutput: false);
