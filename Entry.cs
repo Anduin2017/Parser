@@ -40,6 +40,7 @@ namespace Parser
             var workingPath = args[0];
             var videos = Directory.EnumerateFiles(workingPath, "*.*", SearchOption.AllDirectories)
                 .Where(v =>
+                    v.EndsWith(".webm") ||
                     v.EndsWith(".mp4") ||
                     v.EndsWith(".avi") ||
                     v.EndsWith(".wmv") ||
@@ -64,7 +65,7 @@ namespace Parser
                 var newFileName = $"{fileInfo.Directory}{Path.DirectorySeparatorChar}{bareName}_parsed.mp4";
 
                 File.Delete(newFileName);
-                await _commandService.RunCommand("ffmpeg", $@"-i ""{filePath}"" ""{newFileName}""", folder, getOutput: false);
+                await _commandService.RunCommand("ffmpeg", $@"-i ""{filePath}"" -codec:a copy -codec:v libx265 ""{newFileName}""", folder, getOutput: false);
 
                 // Delete old file.
                 File.Delete(filePath);
