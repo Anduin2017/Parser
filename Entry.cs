@@ -68,7 +68,7 @@ namespace Parser
                 Console.WriteLine($"{filePath} WILL be parsed!");
 
                 File.Delete(newFileName);
-                await _commandService.RunCommand("ffmpeg", $@"-i ""{filePath}"" -codec:a copy -codec:v libx265 ""{newFileName}""", folder, getOutput: false);
+                await _commandService.RunCommand("ffmpeg", $@"-i ""{filePath}"" -codec:a copy -codec:v hevc_nvenc -b:v 16M ""{newFileName}""", folder, getOutput: false);
 
                 // Delete old file.
                 File.Delete(filePath);
