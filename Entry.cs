@@ -28,7 +28,7 @@ namespace Parser
 
             if (args.Length < 1)
             {
-                Console.WriteLine("Usage: WorkingPath");
+                Console.WriteLine("Usage: WorkingPath [useGPU]");
                 Console.WriteLine("Current parameters:");
                 foreach (var arg in args)
                 {
@@ -48,11 +48,11 @@ namespace Parser
 
             foreach (var file in videos)
             {
-                await Parse(file);
+                await Parse(file, coder: args.Any(a => a.Equals("useGPU", StringComparison.OrdinalIgnoreCase)) ? "hevc_nvenc" : "libx265");
             }
         }
 
-        private async Task Parse(string filePath)
+        private async Task Parse(string filePath, string coder)
         {
             var folder = Path.GetDirectoryName(filePath) ?? throw new Exception($"{filePath} is invalid!");
             var baseFileInfo = await _commandService.RunCommand("ffmpeg.exe", $@"-i ""{filePath}""", folder);
@@ -69,7 +69,7 @@ namespace Parser
                 Console.WriteLine($"{filePath} WILL be parsed!");
 
                 File.Delete(newFileName);
-                await _commandService.RunCommand("ffmpeg", $@"-i ""{filePath}"" -codec:a copy -codec:v hevc_nvenc -b:v 16M ""{newFileName}""", folder, getOutput: false);
+                await _commandService.RunCommand("ffmpeg", $@"-i ""{filePath}"" -codec:a copy -codec:v {coder} -b:v 16M ""{newFileName}""", folder, getOutput: false);
 
                 // Delete old file.
                 File.Delete(filePath);
