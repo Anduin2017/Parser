@@ -71,8 +71,15 @@ namespace Parser
                 File.Delete(newFileName);
                 await _commandService.RunCommand("ffmpeg", $@"-i ""{filePath}"" -codec:a copy -codec:v {coder} -b:v 16M ""{newFileName}""", folder, getOutput: false);
 
-                // Delete old file.
-                File.Delete(filePath);
+                if (File.Exists(newFileName))
+                {
+                    // Delete old file.
+                    File.Delete(filePath);
+                }
+                else
+                {
+                    throw new Exception("After parsing, still couldn't locate the converted file: " + newFileName);
+                }
             }
             else
             {
