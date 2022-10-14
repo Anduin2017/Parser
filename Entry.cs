@@ -55,7 +55,7 @@ namespace Parser
         private async Task Parse(string filePath, string coder)
         {
             var folder = Path.GetDirectoryName(filePath) ?? throw new Exception($"{filePath} is invalid!");
-            var baseFileInfo = await _commandService.RunCommand("ffmpeg.exe", $@"-i ""{filePath}""", folder);
+            var baseFileInfo = await _commandService.RunCommand("ffmpeg", $@"-i ""{filePath}""", folder);
             var fileInfo = new FileInfo(filePath);
             var shouldParse =
                 fileInfo.Length > 20 * 1024 * 1024 && // 20MB
