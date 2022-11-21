@@ -2,7 +2,7 @@
 
 using System.CommandLine;
 
-namespace Aiursoft.Parser.Core.Models.Framework;
+namespace Aiursoft.Parser.Core.Framework;
 
 public static class OptionsProvider
 {
@@ -41,7 +41,7 @@ public static class OptionsProvider
         return command;
     }
 
-    public static RootCommand AddPlugins(this RootCommand command, params INinjaPlugin[] pluginInstallers)
+    public static RootCommand AddPlugins(this RootCommand command, params IParserPlugin[] pluginInstallers)
     {
         foreach (var plugin in pluginInstallers)
         {

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parser", "src\Parser\Parser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parser.Core", "src\Parser.Core\Parser.Core.csproj", "{8BB6EA69-6487-4709-B329-65B2F26DBDC2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parser.FFmpeg", "src\Parser.FFMPEG\Parser.FFmpeg.csproj", "{50D3CEAA-D632-4678-BE04-3F1B468B5B96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8BB6EA69-6487-4709-B329-65B2F26DBDC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BB6EA69-6487-4709-B329-65B2F26DBDC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BB6EA69-6487-4709-B329-65B2F26DBDC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50D3CEAA-D632-4678-BE04-3F1B468B5B96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50D3CEAA-D632-4678-BE04-3F1B468B5B96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50D3CEAA-D632-4678-BE04-3F1B468B5B96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50D3CEAA-D632-4678-BE04-3F1B468B5B96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

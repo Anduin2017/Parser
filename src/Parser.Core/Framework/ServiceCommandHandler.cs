@@ -4,7 +4,7 @@ using System.CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Aiursoft.Parser.Core.Models.Framework;
+namespace Aiursoft.Parser.Core.Framework;
 
 public abstract class ServiceCommandHandler<TE, TS> : CommandHandler
     where TE : class, IEntryService

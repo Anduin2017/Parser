@@ -1,45 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using System.IO;
-using Microsoft.Extensions.Logging;
-using Parser;
+﻿using Aiursoft.Parser.Core;
+using Aiursoft.Parser.FFmpeg.Services;
 
-namespace Aiursoft.Parser.OBS
+namespace Aiursoft.Parser.FFmpeg
 {
-    public class OldEntry
+    public class FFmpegEntry : IEntryService
     {
+        private readonly FFmpegOptions _options;
         private readonly CommandService _commandService;
-        private readonly ILogger<OldEntry> logger;
 
-        public OldEntry(
-            CommandService commandService,
-            ILogger<OldEntry> logger)
+        public FFmpegEntry(
+            FFmpegOptions options,
+            CommandService commandService)
         {
+            _options = options;
             _commandService = commandService;
-            this.logger = logger;
         }
 
-        public async Task StartEntry(string[] args)
+        public async Task OnServiceStartedAsync(string path, bool shouldTakeAction)
         {
-            Console.WriteLine("Starting parser...");
-
-            if (args.Length < 1)
-            {
-                Console.WriteLine("Usage: WorkingPath [useGPU]");
-                Console.WriteLine("Current parameters:");
-                foreach (var arg in args)
-                {
-                    Console.WriteLine(arg);
-                }
-                return;
-            }
-
-            var workingPath = args[0];
-            var videos = Directory.EnumerateFiles(workingPath, "*.*", SearchOption.AllDirectories)
+            var videos = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
                 .Where(v =>
                     v.EndsWith(".webm") ||
                     v.EndsWith(".mp4") ||
@@ -49,7 +28,7 @@ namespace Aiursoft.Parser.OBS
 
             foreach (var file in videos)
             {
-                await Parse(file, coder: args.Any(a => a.Equals("useGPU", StringComparison.OrdinalIgnoreCase)) ? "hevc_nvenc" : "libx265");
+                await Parse(file, coder: _options.UseGPU ? "hevc_nvenc" : "libx265");
             }
         }
 

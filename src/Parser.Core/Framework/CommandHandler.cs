@@ -2,7 +2,7 @@
 
 using System.CommandLine;
 
-namespace Aiursoft.Parser.Core.Models.Framework;
+namespace Aiursoft.Parser.Core.Framework;
 
 public abstract class CommandHandler
 {

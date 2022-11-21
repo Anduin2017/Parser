@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<!--Build and code-->
@@ -32,7 +32,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Parser.Core\Parser.Core.csproj" />
+	  <ProjectReference Include="..\Parser.FFMPEG\Parser.FFmpeg.csproj" />
 	</ItemGroup>
 
 </Project>

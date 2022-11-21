@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Parser
+namespace Aiursoft.Parser.FFmpeg.Services
 {
     public class CommandService
     {
