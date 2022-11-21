@@ -7,10 +7,16 @@ namespace Aiursoft.Parser.FFmpeg;
 public class FFmpegHandler : ServiceCommandHandler<FFmpegEntry, StartUp>
 {
     private Option<bool> UseGPU = new Option<bool>(
+        getDefaultValue: () => false,
         aliases: new[] { "--gpu", "-g" },
-        description: "Show NVIDIA GPU to speed up parsing. Only if you have an NVIDIA GPU attached.");
+        description: "Use NVIDIA GPU to speed up parsing. Only if you have an NVIDIA GPU attached.");
 
-    public override string Name => "parser";
+    private Option<int> CRF = new Option<int>(
+        getDefaultValue: () => 20,
+        aliases: new[] { "--crf", "-c" },
+        description: "The range of the CRF scale is 0–51, where 0 is lossless (for 8 bit only, for 10 bit use -qp 0), 20 is the default, and 51 is worst quality possible.");
+
+    public override string Name => "ffmpeg";
 
     public override string Description => "The command to convert all video files to HEVC using FFmpeg.";
 
@@ -18,7 +24,8 @@ public class FFmpegHandler : ServiceCommandHandler<FFmpegEntry, StartUp>
     {
         return new Option[]
         {
-            UseGPU
+            UseGPU,
+            CRF
         };
     }
 
@@ -29,13 +36,14 @@ public class FFmpegHandler : ServiceCommandHandler<FFmpegEntry, StartUp>
             OptionsProvider.PathOptions,
             OptionsProvider.DryRunOption,
             OptionsProvider.VerboseOption,
-            UseGPU);
+            UseGPU,
+            CRF);
     }
 
-    public Task ExecuteOverride(string path, bool dryRun, bool verbose, bool useGPU)
+    public Task ExecuteOverride(string path, bool dryRun, bool verbose, bool useGPU, int crf)
     {
         var services = BuildServices(verbose);
-        services.AddSingleton(new FFmpegOptions { UseGPU = useGPU });
+        services.AddSingleton(new FFmpegOptions { UseGPU = useGPU, CRF = crf });
         return RunFromServices(services, path, dryRun);
     }
 }

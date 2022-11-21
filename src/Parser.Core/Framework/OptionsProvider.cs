@@ -8,7 +8,7 @@ public static class OptionsProvider
 {
     public static readonly Option<string> PathOptions = new(
         aliases: new[] { "--path", "-p" },
-        description: "Path of the projects to be changed.")
+        description: "Path of the videos to be parsed.")
     {
         IsRequired = true
     };

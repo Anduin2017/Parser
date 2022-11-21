@@ -9,5 +9,6 @@ namespace Aiursoft.Parser.FFmpeg
     public class FFmpegOptions
     {
         public bool UseGPU { get; set; }
+        public int CRF { get; set; }
     }
 }

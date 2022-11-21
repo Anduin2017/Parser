@@ -1,10 +1,14 @@
 ﻿using Aiursoft.Parser.Core.Framework;
+using Aiursoft.Parser.FFmpeg;
 using System.CommandLine;
+using System.Reflection;
 
-var description = "A cli tool project helps to re-encode and save all videos under a path.";
+var descriptionAttribute = (Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()).GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
 
-var program = new RootCommand(description)
+var program = new RootCommand(descriptionAttribute ?? "Unknown usage.")
     .AddGlobalOptions()
-    .AddPlugins();
+    .AddPlugins(
+        new FFmpegPlugin()
+    );
 
 return await program.InvokeAsync(args);

@@ -49,7 +49,7 @@ namespace Aiursoft.Parser.FFmpeg
                 Console.WriteLine($"{filePath} WILL be parsed!");
 
                 File.Delete(newFileName);
-                await _commandService.RunCommand("ffmpeg", $@"-i ""{filePath}"" -codec:a copy -codec:v {coder} -crf 20 ""{newFileName}""", folder, getOutput: false);
+                await _commandService.RunCommand("ffmpeg", $@"-i ""{filePath}"" -codec:a copy -codec:v {coder} -crf {_options.CRF} ""{newFileName}""", folder, getOutput: false);
 
                 if (File.Exists(newFileName))
                 {
