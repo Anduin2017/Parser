@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Aiursoft.Parser.FFmpeg
+﻿namespace Aiursoft.Parser.FFmpeg
 {
     public class FFmpegOptions
     {
-        public bool UseGPU { get; set; }
-        public int CRF { get; set; }
+        public bool UseGpu { get; set; }
+        public int Crf { get; set; }
     }
 }

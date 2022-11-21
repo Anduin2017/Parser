@@ -34,7 +34,7 @@ namespace Aiursoft.Parser.FFmpeg
             foreach (var file in videos)
             {
                 _logger.LogTrace("Parsing video file: " + file);
-                await Parse(file, coder: _options.UseGPU ? "hevc_nvenc" : "libx265");
+                await Parse(file, coder: _options.UseGpu ? "hevc_nvenc" : "libx265");
             }
         }
 
@@ -52,10 +52,10 @@ namespace Aiursoft.Parser.FFmpeg
             var newFileName = $"{fileInfo.Directory}{Path.DirectorySeparatorChar}{bareName}_265.mp4";
             if (shouldParse)
             {
-                _logger.LogWarning($"{filePath} WILL be parsed, with codec: {coder}, crf is {_options.CRF}");
+                _logger.LogWarning($"{filePath} WILL be parsed, with codec: {coder}, crf is {_options.Crf}");
 
                 File.Delete(newFileName);
-                await _commandService.RunCommand("ffmpeg", $@"-i ""{filePath}"" -codec:a copy -codec:v {coder} -crf {_options.CRF} ""{newFileName}""", folder, getOutput: false);
+                await _commandService.RunCommand("ffmpeg", $@"-i ""{filePath}"" -codec:a copy -codec:v {coder} -crf {_options.Crf} ""{newFileName}""", folder, getOutput: false);
 
                 if (File.Exists(newFileName))
                 {
