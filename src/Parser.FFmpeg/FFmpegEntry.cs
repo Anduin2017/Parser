@@ -1,23 +1,28 @@
 ﻿using Aiursoft.Parser.Core;
 using Aiursoft.Parser.FFmpeg.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.Parser.FFmpeg
 {
     public class FFmpegEntry : IEntryService
     {
+        private readonly ILogger<FFmpegEntry> _logger;
         private readonly FFmpegOptions _options;
         private readonly CommandService _commandService;
 
         public FFmpegEntry(
+            ILogger<FFmpegEntry> logger,
             FFmpegOptions options,
             CommandService commandService)
         {
+            _logger = logger;
             _options = options;
             _commandService = commandService;
         }
 
         public async Task OnServiceStartedAsync(string path, bool shouldTakeAction)
         {
+            _logger.LogTrace("Enumerating files under path: " + path);
             var videos = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
                 .Where(v =>
                     v.EndsWith(".webm") ||
@@ -28,6 +33,7 @@ namespace Aiursoft.Parser.FFmpeg
 
             foreach (var file in videos)
             {
+                _logger.LogTrace("Parsing video file: " + file);
                 await Parse(file, coder: _options.UseGPU ? "hevc_nvenc" : "libx265");
             }
         }
@@ -46,7 +52,7 @@ namespace Aiursoft.Parser.FFmpeg
             var newFileName = $"{fileInfo.Directory}{Path.DirectorySeparatorChar}{bareName}_265.mp4";
             if (shouldParse)
             {
-                Console.WriteLine($"{filePath} WILL be parsed!");
+                _logger.LogWarning($"{filePath} WILL be parsed, with codec: {coder}, crf is {_options.CRF}");
 
                 File.Delete(newFileName);
                 await _commandService.RunCommand("ffmpeg", $@"-i ""{filePath}"" -codec:a copy -codec:v {coder} -crf {_options.CRF} ""{newFileName}""", folder, getOutput: false);
@@ -63,7 +69,7 @@ namespace Aiursoft.Parser.FFmpeg
             }
             else
             {
-                Console.WriteLine($"{filePath} don't have to be parsed...");
+                _logger.LogInformation($"{filePath} don't have to be parsed...");
             }
         }
     }
