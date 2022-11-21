@@ -1,5 +1,5 @@
 ﻿using System.CommandLine;
-using Aiursoft.Parser.Abstracts;
+using Aiursoft.Parser.Core.Abstracts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 

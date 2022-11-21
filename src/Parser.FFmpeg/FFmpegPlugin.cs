@@ -1,4 +1,4 @@
-﻿using Aiursoft.Parser.Abstracts;
+﻿using Aiursoft.Parser.Core.Abstracts;
 using Aiursoft.Parser.Core.Framework;
 
 namespace Aiursoft.Parser.FFmpeg;
