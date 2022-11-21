@@ -1,8 +1,6 @@
-﻿
+﻿using Microsoft.Extensions.DependencyInjection;
 
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Aiursoft.Parser.Core;
+namespace Aiursoft.Parser.Abstracts;
 
 public interface IStartUp
 {

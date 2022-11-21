@@ -1,6 +1,6 @@
 ﻿using Aiursoft.Parser.Core.Framework;
 
-namespace Aiursoft.Parser.Core;
+namespace Aiursoft.Parser.Abstracts;
 
 public interface IParserPlugin
 {

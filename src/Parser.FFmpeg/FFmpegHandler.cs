@@ -6,12 +6,12 @@ namespace Aiursoft.Parser.FFmpeg;
 
 public class FFmpegHandler : ServiceCommandHandler<FFmpegEntry, StartUp>
 {
-    private Option<bool> UseGpu = new Option<bool>(
+    private Option<bool> _useGpu = new Option<bool>(
         getDefaultValue: () => false,
         aliases: new[] { "--gpu", "-g" },
         description: "Use NVIDIA GPU to speed up parsing. Only if you have an NVIDIA GPU attached.");
 
-    private Option<int> Crf = new Option<int>(
+    private Option<int> _crf = new Option<int>(
         getDefaultValue: () => 20,
         aliases: new[] { "--crf", "-c" },
         description: "The range of the CRF scale is 0–51, where 0 is lossless (for 8 bit only, for 10 bit use -qp 0), 20 is the default, and 51 is worst quality possible.");
@@ -24,8 +24,8 @@ public class FFmpegHandler : ServiceCommandHandler<FFmpegEntry, StartUp>
     {
         return new Option[]
         {
-            UseGpu,
-            Crf
+            _useGpu,
+            _crf
         };
     }
 
@@ -36,8 +36,8 @@ public class FFmpegHandler : ServiceCommandHandler<FFmpegEntry, StartUp>
             OptionsProvider.PathOptions,
             OptionsProvider.DryRunOption,
             OptionsProvider.VerboseOption,
-            UseGpu,
-            Crf);
+            _useGpu,
+            _crf);
     }
 
     public Task ExecuteOverride(string path, bool dryRun, bool verbose, bool useGpu, int crf)

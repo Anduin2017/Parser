@@ -1,4 +1,4 @@
-﻿using Aiursoft.Parser.Core;
+﻿using Aiursoft.Parser.Abstracts;
 using Aiursoft.Parser.FFmpeg.Services;
 using Microsoft.Extensions.Logging;
 
