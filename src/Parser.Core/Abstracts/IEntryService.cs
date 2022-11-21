@@ -1,4 +1,4 @@
-﻿namespace Aiursoft.Parser.Abstracts;
+﻿namespace Aiursoft.Parser.Core.Abstracts;
 
 public interface IEntryService
 {
