@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
 using Microsoft.Extensions.Logging;
+using Parser;
 
-namespace Parser
+namespace Aiursoft.Parser.OBS
 {
-    public class Entry
+    public class OldEntry
     {
         private readonly CommandService _commandService;
-        private readonly ILogger<Entry> logger;
+        private readonly ILogger<OldEntry> logger;
 
-        public Entry(
+        public OldEntry(
             CommandService commandService,
-            ILogger<Entry> logger)
+            ILogger<OldEntry> logger)
         {
             _commandService = commandService;
             this.logger = logger;
