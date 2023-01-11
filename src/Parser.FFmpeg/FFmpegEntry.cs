@@ -57,7 +57,7 @@ namespace Aiursoft.Parser.FFmpeg
                 File.Delete(newFileName);
                 await _commandService.RunCommand("ffmpeg", $@"-i ""{filePath}"" -codec:a copy -codec:v {coder} -crf {_options.Crf} ""{newFileName}""", folder, getOutput: false);
 
-                if (File.Exists(newFileName))
+                if (File.Exists(newFileName) && new FileInfo(newFileName).Length > 8 * 1024 * 1024) // Larger than 8MB.
                 {
                     // Delete old file.
                     File.Delete(filePath);
