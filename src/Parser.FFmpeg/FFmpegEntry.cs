@@ -45,9 +45,10 @@ namespace Aiursoft.Parser.FFmpeg
             var fileInfo = new FileInfo(filePath);
             var shouldParse =
                 fileInfo.Length > 20 * 1024 * 1024 && // 20MB
-                !baseFileInfo.Contains("Video: hevc") ||  // Not HEVC
-                baseFileInfo.Contains("creation_time") || // Or contains privacy info
-                !filePath.EndsWith(".mp4"); // Or not MP4
+
+                (
+                    !baseFileInfo.Contains("Video: hevc") ||       // Not HEVC
+                ); 
             var bareName = Path.GetFileNameWithoutExtension(filePath);
             var newFileName = $"{fileInfo.Directory}{Path.DirectorySeparatorChar}{bareName}_265.mp4";
             if (shouldParse)
