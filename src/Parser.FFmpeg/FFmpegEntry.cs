@@ -48,6 +48,7 @@ namespace Aiursoft.Parser.FFmpeg
 
                 (
                     !baseFileInfo.Contains("Video: hevc") ||       // Not HEVC
+                    !filePath.EndsWith(".mp4")                     // Or not MP4
                 ); 
             var bareName = Path.GetFileNameWithoutExtension(filePath);
             var newFileName = $"{fileInfo.Directory}{Path.DirectorySeparatorChar}{bareName}_265.mp4";
