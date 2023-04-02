@@ -4,7 +4,7 @@ namespace Aiursoft.Parser.FFmpeg.Services
 {
     public class CommandService
     {
-        public async Task<string> RunCommand(string bin, string arg, string path, bool getOutput = true)
+        public async Task<string> RunCommandAsync(string bin, string arg, string path, bool getOutput = true)
         {
             var p = new Process
             {
