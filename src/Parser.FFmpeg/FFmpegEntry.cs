@@ -79,7 +79,6 @@ namespace Aiursoft.Parser.FFmpeg
 
             if (gpu)
             {
-                //sudo ffmpeg -i ./PXL_20230421_165446519.mp4 -c:v hevc_nvenc -rc:v vbr -cq:v 30 -c:a copy -preset slow -rc-lookahead 10 -profile:v main10 ./output.mp4
                 await _commandService.RunCommandAsync("ffmpeg", $@"-i ""{sourceFilePath}"" -preset slow -codec:a copy -codec:v hevc_nvenc -rc:v vbr -cq:v {crf} -rc-lookahead 10 -profile:v main10 ""{targetFilePath}""", folder, getOutput: false);
             }else
             {
