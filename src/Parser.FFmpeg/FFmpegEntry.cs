@@ -48,7 +48,7 @@ namespace Aiursoft.Parser.FFmpeg
             if (ShouldParseVideo(baseFileInfo, fileInfo))
             {
                 var newFileName = GetNewFileName(fileInfo);
-                await ParseVideoAsync(filePath, newFileName, folder, coder: _options.UseGpu ? "hevc_nvenc" : "libx265", crf: _options.Crf);
+                await ParseVideoAsync(filePath, newFileName, folder, gpu: _options.UseGpu, crf: _options.Crf);
             }
             else
             {
@@ -68,16 +68,23 @@ namespace Aiursoft.Parser.FFmpeg
             return $"{fileInfo.Directory}{Path.DirectorySeparatorChar}{bareName}_265.mp4";
         }
 
-        private async Task ParseVideoAsync(string sourceFilePath, string targetFilePath, string folder, string coder, int crf)
+        private async Task ParseVideoAsync(string sourceFilePath, string targetFilePath, string folder, bool gpu, int crf)
         {
-            _logger.LogWarning($"{sourceFilePath} WILL be parsed, with codec: {coder}, crf is {crf}");
+            _logger.LogWarning($"{sourceFilePath} WILL be parsed! crf is {crf}");
 
             if (File.Exists(targetFilePath))
             {
                 File.Delete(targetFilePath);
             }
 
-            await _commandService.RunCommandAsync("ffmpeg", $@"-i ""{sourceFilePath}"" -preset slower -codec:a copy -codec:v {coder} -crf {crf} ""{targetFilePath}""", folder, getOutput: false);
+            if (gpu)
+            {
+                //sudo ffmpeg -i ./PXL_20230421_165446519.mp4 -c:v hevc_nvenc -rc:v vbr -cq:v 30 -c:a copy -preset slow -rc-lookahead 10 -profile:v main10 ./output.mp4
+                await _commandService.RunCommandAsync("ffmpeg", $@"-i ""{sourceFilePath}"" -preset slow -codec:a copy -codec:v hevc_nvenc -rc:v vbr -cq:v {crf} -rc-lookahead 10 -profile:v main10 ""{targetFilePath}""", folder, getOutput: false);
+            }else
+            {
+                await _commandService.RunCommandAsync("ffmpeg", $@"-i ""{sourceFilePath}"" -preset slow -codec:a copy -codec:v libx265    -crf {crf} ""{targetFilePath}""", folder, getOutput: false);
+            }
 
             var targetFileInfo = new FileInfo(targetFilePath);
             if (targetFileInfo.Exists && targetFileInfo.Length > 8 * MbToBytes)
