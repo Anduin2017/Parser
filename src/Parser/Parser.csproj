@@ -24,11 +24,11 @@
 		<Description>A cli tool project helps to re-encode and save all videos under a path.</Description>
 		<PackageTags>cli nuget dotnet ffmpeg</PackageTags>
 		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://git.aiursoft.cn/Anduin/Parser</RepositoryUrl>
+		<RepositoryUrl>https://gitlab.aiursoft.cn/Anduin/Parser</RepositoryUrl>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageId>Aiursoft.Parser</PackageId>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageProjectUrl>https://git.aiursoft.cn/Anduin/Parser</PackageProjectUrl>
+		<PackageProjectUrl>https://gitlab.aiursoft.cn/Anduin/Parser</PackageProjectUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
