@@ -6,7 +6,7 @@
 		<Version>0.0.4</Version>
 		<TargetFramework>net6.0</TargetFramework>
 		<AssemblyName>parser</AssemblyName>
-		<RootNamespace>Aiursoft.Parser</RootNamespace>
+		<RootNamespace>Anduin.Parser</RootNamespace>
 		<!--Tool-->
 		<PackAsTool>true</PackAsTool>
 		<ToolCommandName>parser</ToolCommandName>
@@ -26,7 +26,7 @@
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://gitlab.aiursoft.cn/Anduin/Parser</RepositoryUrl>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<PackageId>Aiursoft.Parser</PackageId>
+		<PackageId>Anduin.Parser</PackageId>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://gitlab.aiursoft.cn/Anduin/Parser</PackageProjectUrl>
 	</PropertyGroup>

@@ -1,8 +1,8 @@
-﻿using Aiursoft.Parser.Core.Framework;
+﻿using Anduin.Parser.Core.Framework;
 using Microsoft.Extensions.DependencyInjection;
 using System.CommandLine;
 
-namespace Aiursoft.Parser.FFmpeg;
+namespace Anduin.Parser.FFmpeg;
 
 public class FFmpegHandler : ServiceCommandHandler<FFmpegEntry, StartUp>
 {

@@ -1,4 +1,4 @@
-﻿namespace Aiursoft.Parser.FFmpeg
+﻿namespace Anduin.Parser.FFmpeg
 {
     public class FFmpegOptions
     {

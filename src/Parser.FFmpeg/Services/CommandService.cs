@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Aiursoft.Parser.FFmpeg.Services
+namespace Anduin.Parser.FFmpeg.Services
 {
     public class CommandService
     {

@@ -1,5 +1,5 @@
-﻿using Aiursoft.Parser.Core.Framework;
-using Aiursoft.Parser.FFmpeg;
+﻿using Anduin.Parser.Core.Framework;
+using Anduin.Parser.FFmpeg;
 using System.CommandLine;
 using System.Reflection;
 

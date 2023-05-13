@@ -1,9 +1,9 @@
 ﻿using System.CommandLine;
-using Aiursoft.Parser.Core.Abstracts;
+using Anduin.Parser.Core.Abstracts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Aiursoft.Parser.Core.Framework;
+namespace Anduin.Parser.Core.Framework;
 
 public abstract class ServiceCommandHandler<TE, TS> : CommandHandler
     where TE : class, IEntryService

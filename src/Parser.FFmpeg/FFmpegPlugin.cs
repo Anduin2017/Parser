@@ -1,7 +1,7 @@
-﻿using Aiursoft.Parser.Core.Abstracts;
-using Aiursoft.Parser.Core.Framework;
+﻿using Anduin.Parser.Core.Abstracts;
+using Anduin.Parser.Core.Framework;
 
-namespace Aiursoft.Parser.FFmpeg;
+namespace Anduin.Parser.FFmpeg;
 
 public class FFmpegPlugin : IParserPlugin
 {

@@ -1,6 +1,6 @@
-﻿using Aiursoft.Parser.Core.Framework;
+﻿using Anduin.Parser.Core.Framework;
 
-namespace Aiursoft.Parser.Core.Abstracts;
+namespace Anduin.Parser.Core.Abstracts;
 
 public interface IParserPlugin
 {

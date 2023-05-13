@@ -1,8 +1,8 @@
-﻿using Aiursoft.Parser.Core.Abstracts;
-using Aiursoft.Parser.FFmpeg.Services;
+﻿using Anduin.Parser.Core.Abstracts;
+using Anduin.Parser.FFmpeg.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Aiursoft.Parser.FFmpeg;
+namespace Anduin.Parser.FFmpeg;
 
 public class StartUp : IStartUp
 {

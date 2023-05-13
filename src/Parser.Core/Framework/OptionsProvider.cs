@@ -1,7 +1,7 @@
-﻿using Aiursoft.Parser.Core.Abstracts;
+﻿using Anduin.Parser.Core.Abstracts;
 using System.CommandLine;
 
-namespace Aiursoft.Parser.Core.Framework;
+namespace Anduin.Parser.Core.Framework;
 
 public static class OptionsProvider
 {
