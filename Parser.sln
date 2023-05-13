@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parser", "src\Parser\Parser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parser.Core", "src\Parser.Core\Parser.Core.csproj", "{8BB6EA69-6487-4709-B329-65B2F26DBDC2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parser.FFmpeg", "src\Parser.FFMPEG\Parser.FFmpeg.csproj", "{50D3CEAA-D632-4678-BE04-3F1B468B5B96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parser.FFmpeg", "src\Parser.FFmpeg\Parser.FFmpeg.csproj", "{50D3CEAA-D632-4678-BE04-3F1B468B5B96}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C3378506-CFC5-4A6D-BF31-E34D2F49830A}"
 EndProject
