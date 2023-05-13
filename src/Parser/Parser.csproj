@@ -32,7 +32,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Parser.FFMPEG\Parser.FFmpeg.csproj" />
+	  <ProjectReference Include="..\Parser.FFmpeg\Parser.FFmpeg.csproj" />
 	</ItemGroup>
 
 </Project>
