@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<!--Build and code-->
 		<OutputType>Exe</OutputType>
-		<Version>0.0.4</Version>
+		<Version>0.0.5</Version>
 		<TargetFramework>net6.0</TargetFramework>
 		<AssemblyName>parser</AssemblyName>
 		<RootNamespace>Anduin.Parser</RootNamespace>
