@@ -35,11 +35,11 @@ namespace Anduin.Parser.FFmpeg
             foreach (var file in videos)
             {
                 _logger.LogTrace("Parsing video file: " + file);
-                await this.ProcessVideoAsync(file);
+                await this.ProcessVideoAsync(file, shouldTakeAction);
             }
         }
 
-        private async Task ProcessVideoAsync(string filePath)
+        private async Task ProcessVideoAsync(string filePath, bool shouldTakeAction)
         {
             var folder = Path.GetDirectoryName(filePath) ?? throw new Exception($"{filePath} is invalid!");
             var baseFileInfo = await _commandService.RunCommandAsync("ffmpeg", $@"-i ""{filePath}""", folder);
@@ -48,18 +48,38 @@ namespace Anduin.Parser.FFmpeg
             if (ShouldParseVideo(baseFileInfo, fileInfo))
             {
                 var newFileName = GetNewFileName(fileInfo);
-                await ParseVideoAsync(filePath, newFileName, folder, gpu: _options.UseGpu, crf: _options.Crf);
-            }
-            else
-            {
-                _logger.LogInformation($"{filePath} don't have to be parsed...");
+
+                _logger.LogInformation($"{filePath} should parsed...");
+                if (shouldTakeAction)
+                {
+                    await ParseVideoAsync(filePath, newFileName, folder, gpu: _options.UseGpu, crf: _options.Crf);
+                }
+                else
+                {
+                    _logger.LogInformation($"{filePath} Runniung in dry run mode. Skip parsing...");
+                }
             }
         }
 
         private bool ShouldParseVideo(string baseFileInfo, FileInfo fileInfo)
         {
-            return fileInfo.Length > 20 * MbToBytes &&
-                   (!baseFileInfo.Contains("Video: hevc") || !fileInfo.Name.EndsWith(".mp4") || baseFileInfo.Contains("creation_time"));
+            var largeEnough = fileInfo.Length > 20 * MbToBytes;
+            var isNotHevc = !baseFileInfo.Contains("Video: hevc");
+            var isNotmp4 = !fileInfo.Name.EndsWith(".mp4");
+            var containsPrivacyInfo = baseFileInfo.Contains("creation_time");
+
+            if (!largeEnough)
+                _logger.LogInformation($"Don't have to parse {fileInfo.FullName} because it's too small: {fileInfo.Length / MbToBytes}MB. Minimum size is 20MB.");
+            else if (isNotHevc)
+                _logger.LogInformation($"Parse {fileInfo.FullName} because it is not HEVC!");
+            else if (isNotmp4)
+                _logger.LogInformation($"Parse {fileInfo.FullName} because it is not mp4!");
+            else if (containsPrivacyInfo)
+                _logger.LogInformation($"Parse {fileInfo.FullName} because it contains privacy info!");
+            else
+                _logger.LogInformation($"{fileInfo.FullName} don't have to be parsed...");
+
+            return largeEnough && (isNotHevc || isNotmp4 || containsPrivacyInfo);
         }
 
         private string GetNewFileName(FileInfo fileInfo)
@@ -80,7 +100,8 @@ namespace Anduin.Parser.FFmpeg
             if (gpu)
             {
                 await _commandService.RunCommandAsync("ffmpeg", $@"-i ""{sourceFilePath}"" -preset slow -codec:a copy -codec:v hevc_nvenc -rc:v vbr -cq:v {crf} -rc-lookahead 10 -profile:v main10 ""{targetFilePath}""", folder, getOutput: false);
-            }else
+            }
+            else
             {
                 await _commandService.RunCommandAsync("ffmpeg", $@"-i ""{sourceFilePath}"" -preset slow -codec:a copy -codec:v libx265    -crf {crf} ""{targetFilePath}""", folder, getOutput: false);
             }
