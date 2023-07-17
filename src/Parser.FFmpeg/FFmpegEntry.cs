@@ -49,14 +49,14 @@ namespace Anduin.Parser.FFmpeg
             {
                 var newFileName = GetNewFileName(fileInfo);
 
-                _logger.LogInformation($"{filePath} should parsed...");
+                _logger.LogInformation($"{filePath} should be parsed...");
                 if (shouldTakeAction)
                 {
                     await ParseVideoAsync(filePath, newFileName, folder, gpu: _options.UseGpu, crf: _options.Crf);
                 }
                 else
                 {
-                    _logger.LogInformation($"{filePath} Runniung in dry run mode. Skip parsing...");
+                    _logger.LogInformation($"{filePath} Running in dry run mode. Skip parsing...");
                 }
             }
         }
