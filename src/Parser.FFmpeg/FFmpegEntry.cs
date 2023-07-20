@@ -47,8 +47,6 @@ namespace Anduin.Parser.FFmpeg
             if (ShouldParseVideo(baseFileInfo, fileInfo))
             {
                 var newFileName = GetNewFileName(fileInfo);
-
-                _logger.LogInformation("{FilePath} should be parsed...", filePath);
                 if (shouldTakeAction)
                 {
                     await ParseVideoAsync(filePath, newFileName, folder, gpu: _options.UseGpu, crf: _options.Crf);
@@ -68,15 +66,21 @@ namespace Anduin.Parser.FFmpeg
             var containsPrivacyInfo = baseFileInfo.Contains("creation_time");
 
             if (!largeEnough)
-                _logger.LogInformation("Don\'t have to parse {FileInfoFullName} because it\'s too small: {FileInfoLength}MB. Minimum size is 20MB", fileInfo.FullName, fileInfo.Length / MbToBytes);
+                _logger.LogInformation(
+                    "{FileInfoFullName} should not be parsed, because it\'s too small: {FileInfoLength}MB. Minimum size is 20MB",
+                    fileInfo.FullName, fileInfo.Length / MbToBytes);
             else if (isNotHevc)
-                _logger.LogInformation("Parse {FileInfoFullName} because it is not HEVC!", fileInfo.FullName);
+                _logger.LogInformation("{FileInfoFullName} should be parsed, because it is not HEVC!",
+                    fileInfo.FullName);
             else if (isNotMp4)
-                _logger.LogInformation("Parse {FileInfoFullName} because it is not mp4!", fileInfo.FullName);
+                _logger.LogInformation("{FileInfoFullName} should be parsed, because it is not mp4!",
+                    fileInfo.FullName);
             else if (containsPrivacyInfo)
-                _logger.LogInformation("Parse {FileInfoFullName} because it contains privacy info!", fileInfo.FullName);
+                _logger.LogInformation("{FileInfoFullName} should be parsed, because it contains privacy info!",
+                    fileInfo.FullName);
             else
-                _logger.LogInformation("{FileInfoFullName} don\'t have to be parsed...", fileInfo.FullName);
+                _logger.LogInformation("{FileInfoFullName} should not be parsed, because it is compliant!",
+                    fileInfo.FullName);
 
             return largeEnough && (isNotHevc || isNotMp4 || containsPrivacyInfo);
         }
@@ -87,9 +91,10 @@ namespace Anduin.Parser.FFmpeg
             return $"{fileInfo.Directory}{Path.DirectorySeparatorChar}{bareName}_265.mp4";
         }
 
-        private async Task ParseVideoAsync(string sourceFilePath, string targetFilePath, string folder, bool gpu, int crf)
+        private async Task ParseVideoAsync(string sourceFilePath, string targetFilePath, string folder, bool gpu,
+            int crf)
         {
-            _logger.LogWarning("{SourceFilePath} WILL be parsed! crf is {Crf}", sourceFilePath, crf);
+            _logger.LogWarning("{SourceFilePath} parsing initialized! crf is {Crf}", sourceFilePath, crf);
 
             if (File.Exists(targetFilePath))
             {
@@ -98,23 +103,41 @@ namespace Anduin.Parser.FFmpeg
 
             if (gpu)
             {
-                await _commandService.RunCommandAsync("ffmpeg", $@"-i ""{sourceFilePath}"" -preset slow -codec:a copy -codec:v hevc_nvenc -rc:v vbr -cq:v {crf} -rc-lookahead 10 -profile:v main10 ""{targetFilePath}""", folder, getOutput: false);
+                await _commandService.RunCommandAsync("ffmpeg",
+                    $@"-i ""{sourceFilePath}"" -preset slow -codec:a copy -codec:v hevc_nvenc -rc:v vbr -cq:v {crf} -rc-lookahead 10 -profile:v main10 ""{targetFilePath}""",
+                    folder, getOutput: false);
             }
             else
             {
-                await _commandService.RunCommandAsync("ffmpeg", $@"-i ""{sourceFilePath}"" -preset slow -codec:a copy -codec:v libx265    -crf {crf} ""{targetFilePath}""", folder, getOutput: false);
+                await _commandService.RunCommandAsync("ffmpeg",
+                    $@"-i ""{sourceFilePath}"" -preset slow -codec:a copy -codec:v libx265    -crf {crf} ""{targetFilePath}""",
+                    folder, getOutput: false);
             }
 
+            var sourceFileInfo = new FileInfo(sourceFilePath);
             var targetFileInfo = new FileInfo(targetFilePath);
+            _logger.LogInformation(
+                "New file size is {ConvertFileSizeToMb}, source file size is {SourceFileSizeToMb}. Saved {SavedFileSizeToMb}",
+                ConvertFileSizeToMb(targetFileInfo.Length),
+                ConvertFileSizeToMb(sourceFileInfo.Length),
+                ConvertFileSizeToMb(sourceFileInfo.Length - targetFileInfo.Length));
+
             // ReSharper disable once MergeIntoPattern
             if (targetFileInfo.Exists && targetFileInfo.Length > 8 * MbToBytes)
             {
+                _logger.LogWarning("{TargetFilePath} parsed file exists. Deleting source file...", targetFilePath);
                 File.Delete(sourceFilePath);
             }
             else
             {
                 throw new Exception("After parsing, still couldn't locate the converted file: " + targetFilePath);
             }
+        }
+
+        private static string ConvertFileSizeToMb(long fileSize)
+        {
+            var sizeInMb = (double)fileSize / (1024 * 1024);
+            return sizeInMb.ToString("0.##") + " MB";
         }
     }
 }
