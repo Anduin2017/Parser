@@ -1,9 +1,9 @@
-﻿using Anduin.Parser.Core.Abstracts;
-using Anduin.Parser.Core.Framework;
+﻿using Aiursoft.CommandFramework.Abstracts;
+using Aiursoft.CommandFramework.Framework;
 
 namespace Anduin.Parser.FFmpeg;
 
-public class FFmpegPlugin : IParserPlugin
+public class FFmpegPlugin : IPlugin
 {
     public CommandHandler[] Install() => new CommandHandler[] { new FFmpegHandler() };
 }

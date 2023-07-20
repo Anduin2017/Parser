@@ -23,7 +23,7 @@ namespace Anduin.Parser.FFmpeg
 
         public async Task OnServiceStartedAsync(string path, bool shouldTakeAction)
         {
-            _logger.LogTrace("Enumerating files under path: " + path);
+            _logger.LogTrace("Enumerating files under path: {Path}", path);
             var videos = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
                 .Where(v =>
                     v.EndsWith(".webm") ||
@@ -34,8 +34,8 @@ namespace Anduin.Parser.FFmpeg
 
             foreach (var file in videos)
             {
-                _logger.LogTrace("Parsing video file: " + file);
-                await this.ProcessVideoAsync(file, shouldTakeAction);
+                _logger.LogTrace("Parsing video file: {File}", file);
+                await ProcessVideoAsync(file, shouldTakeAction);
             }
         }
 
@@ -49,14 +49,14 @@ namespace Anduin.Parser.FFmpeg
             {
                 var newFileName = GetNewFileName(fileInfo);
 
-                _logger.LogInformation($"{filePath} should be parsed...");
+                _logger.LogInformation("{FilePath} should be parsed...", filePath);
                 if (shouldTakeAction)
                 {
                     await ParseVideoAsync(filePath, newFileName, folder, gpu: _options.UseGpu, crf: _options.Crf);
                 }
                 else
                 {
-                    _logger.LogInformation($"{filePath} Running in dry run mode. Skip parsing...");
+                    _logger.LogInformation("{FilePath} Running in dry run mode. Skip parsing...", filePath);
                 }
             }
         }
@@ -65,21 +65,21 @@ namespace Anduin.Parser.FFmpeg
         {
             var largeEnough = fileInfo.Length > 20 * MbToBytes;
             var isNotHevc = !baseFileInfo.Contains("Video: hevc");
-            var isNotmp4 = !fileInfo.Name.EndsWith(".mp4");
+            var isNotMp4 = !fileInfo.Name.EndsWith(".mp4");
             var containsPrivacyInfo = baseFileInfo.Contains("creation_time");
 
             if (!largeEnough)
-                _logger.LogInformation($"Don't have to parse {fileInfo.FullName} because it's too small: {fileInfo.Length / MbToBytes}MB. Minimum size is 20MB.");
+                _logger.LogInformation("Don\'t have to parse {FileInfoFullName} because it\'s too small: {FileInfoLength}MB. Minimum size is 20MB", fileInfo.FullName, fileInfo.Length / MbToBytes);
             else if (isNotHevc)
-                _logger.LogInformation($"Parse {fileInfo.FullName} because it is not HEVC!");
-            else if (isNotmp4)
-                _logger.LogInformation($"Parse {fileInfo.FullName} because it is not mp4!");
+                _logger.LogInformation("Parse {FileInfoFullName} because it is not HEVC!", fileInfo.FullName);
+            else if (isNotMp4)
+                _logger.LogInformation("Parse {FileInfoFullName} because it is not mp4!", fileInfo.FullName);
             else if (containsPrivacyInfo)
-                _logger.LogInformation($"Parse {fileInfo.FullName} because it contains privacy info!");
+                _logger.LogInformation("Parse {FileInfoFullName} because it contains privacy info!", fileInfo.FullName);
             else
-                _logger.LogInformation($"{fileInfo.FullName} don't have to be parsed...");
+                _logger.LogInformation("{FileInfoFullName} don\'t have to be parsed...", fileInfo.FullName);
 
-            return largeEnough && (isNotHevc || isNotmp4 || containsPrivacyInfo);
+            return largeEnough && (isNotHevc || isNotMp4 || containsPrivacyInfo);
         }
 
         private string GetNewFileName(FileInfo fileInfo)
@@ -90,7 +90,7 @@ namespace Anduin.Parser.FFmpeg
 
         private async Task ParseVideoAsync(string sourceFilePath, string targetFilePath, string folder, bool gpu, int crf)
         {
-            _logger.LogWarning($"{sourceFilePath} WILL be parsed! crf is {crf}");
+            _logger.LogWarning("{SourceFilePath} WILL be parsed! crf is {Crf}", sourceFilePath, crf);
 
             if (File.Exists(targetFilePath))
             {
@@ -107,6 +107,7 @@ namespace Anduin.Parser.FFmpeg
             }
 
             var targetFileInfo = new FileInfo(targetFilePath);
+            // ReSharper disable once MergeIntoPattern
             if (targetFileInfo.Exists && targetFileInfo.Length > 8 * MbToBytes)
             {
                 File.Delete(sourceFilePath);

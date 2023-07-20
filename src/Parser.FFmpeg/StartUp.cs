@@ -1,4 +1,4 @@
-﻿using Anduin.Parser.Core.Abstracts;
+﻿using Aiursoft.CommandFramework.Abstracts;
 using Anduin.Parser.FFmpeg.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,6 +8,7 @@ public class StartUp : IStartUp
 {
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddTransient<FFmpegEntry>();
         services.AddTransient<CommandService>();
     }
 }

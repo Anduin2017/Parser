@@ -1,6 +1,7 @@
 ﻿using System.CommandLine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Reflection;
+using Aiursoft.CommandFramework.Extensions;
 using Anduin.Parser.Core.Framework;
 using Anduin.Parser.FFmpeg;
 
@@ -16,8 +17,8 @@ public class IntegrationTests
     {
         var descriptionAttribute = (Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()).GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
 
-        this._testVideo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "test_video.mp4");
-        this._program = new RootCommand(descriptionAttribute ?? "Unknown usage.")
+        _testVideo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "test_video.mp4");
+        _program = new RootCommand(descriptionAttribute ?? "Unknown usage.")
             .AddGlobalOptions()
             .AddPlugins(
                 new FFmpegPlugin()

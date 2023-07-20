@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<!--Build and code-->
 		<OutputType>Exe</OutputType>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<TargetFramework>net6.0</TargetFramework>
 		<AssemblyName>parser</AssemblyName>
 		<RootNamespace>Anduin.Parser</RootNamespace>
@@ -20,7 +20,7 @@
 		<!--Nuget-->
 		<Company>Aiursoft</Company>
 		<Product>Parser</Product>
-		<Authors>anduin2017</Authors>
+		<Authors>anduin</Authors>
 		<Description>A cli tool project helps to re-encode and save all videos under a path.</Description>
 		<PackageTags>cli nuget dotnet ffmpeg</PackageTags>
 		<RepositoryType>git</RepositoryType>

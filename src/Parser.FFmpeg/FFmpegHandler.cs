@@ -1,10 +1,13 @@
-﻿using Anduin.Parser.Core.Framework;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.CommandLine;
+using Aiursoft.CommandFramework.Framework;
+using Aiursoft.CommandFramework.Models;
+using Aiursoft.CommandFramework.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Anduin.Parser.FFmpeg;
 
-public class FFmpegHandler : ServiceCommandHandler<FFmpegEntry, StartUp>
+public class FFmpegHandler : CommandHandler
 {
     private readonly Option<bool> _useGpu = new(
         getDefaultValue: () => false,
@@ -20,7 +23,7 @@ public class FFmpegHandler : ServiceCommandHandler<FFmpegEntry, StartUp>
 
     public override string Description => "The command to convert all video files to HEVC using FFmpeg.";
 
-    public override Option[] GetOptions()
+    public override Option[] GetCommandOptions()
     {
         return new Option[]
         {
@@ -33,17 +36,22 @@ public class FFmpegHandler : ServiceCommandHandler<FFmpegEntry, StartUp>
     {
         command.SetHandler(
             ExecuteOverride,
-            OptionsProvider.PathOptions,
-            OptionsProvider.DryRunOption,
-            OptionsProvider.VerboseOption,
+            CommonOptionsProvider.PathOptions,
+            CommonOptionsProvider.DryRunOption,
+            CommonOptionsProvider.VerboseOption,
             _useGpu,
             _crf);
     }
 
     private Task ExecuteOverride(string path, bool dryRun, bool verbose, bool useGpu, int crf)
     {
-        var services = BuildServices(verbose);
+        var services = ServiceBuilder.BuildServices<StartUp>(verbose);
         services.AddSingleton(new FFmpegOptions { UseGpu = useGpu, Crf = crf });
-        return RunFromServices(services, path, dryRun);
+        var serviceProvider = services.BuildServiceProvider();
+        var logger = serviceProvider.GetRequiredService<ILogger<FFmpegHandler>>();
+        var entry = serviceProvider.GetRequiredService<FFmpegEntry>();
+        var fullPath = Path.GetFullPath(path);
+        logger.LogTrace("Starting service: FFmpeg Entry. Full path is: {FullPath}, Dry run is: {DryRun}", fullPath, dryRun);
+        return entry.OnServiceStartedAsync(fullPath, shouldTakeAction: !dryRun);
     }
 }

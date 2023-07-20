@@ -2,6 +2,7 @@
 using Anduin.Parser.FFmpeg;
 using System.CommandLine;
 using System.Reflection;
+using Aiursoft.CommandFramework.Extensions;
 
 var descriptionAttribute = (Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()).GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
 
