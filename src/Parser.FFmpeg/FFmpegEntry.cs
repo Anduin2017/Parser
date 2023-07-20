@@ -1,10 +1,9 @@
-﻿using Anduin.Parser.Core.Abstracts;
-using Anduin.Parser.FFmpeg.Services;
+﻿using Anduin.Parser.FFmpeg.Services;
 using Microsoft.Extensions.Logging;
 
 namespace Anduin.Parser.FFmpeg
 {
-    public class FFmpegEntry : IEntryService
+    public class FFmpegEntry
     {
         private readonly ILogger<FFmpegEntry> _logger;
         private readonly FFmpegOptions _options;
