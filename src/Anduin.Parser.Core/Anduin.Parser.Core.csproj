@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
+        <AssemblyName>Anduin.Parser.Core</AssemblyName>
         <RootNamespace>Anduin.Parser.Core</RootNamespace>
         <IsTestProject>false</IsTestProject>
         <IsPackable>false</IsPackable>
@@ -10,8 +11,8 @@
         <PackageId>Anduin.Parser.Core</PackageId>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Aiursoft.CommandFramework" Version="6.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
-        <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+        <PackageReference Include="Aiursoft.CommandFramework" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
     </ItemGroup>
 </Project>
