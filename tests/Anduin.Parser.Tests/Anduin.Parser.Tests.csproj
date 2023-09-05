@@ -19,7 +19,7 @@
         <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Parser\Parser.csproj" />
+        <ProjectReference Include="..\..\src\Anduin.Parser\Anduin.Parser.csproj" />
     </ItemGroup>
     <ItemGroup>
         <None Update="assets\test_video.mp4">

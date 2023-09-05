@@ -2,12 +2,12 @@
     <PropertyGroup>
         <OutputType>Library</OutputType>
         <TargetFramework>net6.0</TargetFramework>
-        <AssemblyName>Parser.Core</AssemblyName>
         <RootNamespace>Anduin.Parser.Core</RootNamespace>
         <IsTestProject>false</IsTestProject>
         <IsPackable>false</IsPackable>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackageId>Anduin.Parser.Core</PackageId>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Aiursoft.CommandFramework" Version="6.0.0" />

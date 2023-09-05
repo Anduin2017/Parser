@@ -2,14 +2,14 @@
     <PropertyGroup>
         <OutputType>Library</OutputType>
         <TargetFramework>net6.0</TargetFramework>
-        <AssemblyName>Parser.FFmpeg</AssemblyName>
         <RootNamespace>Anduin.Parser.FFmpeg</RootNamespace>
         <IsTestProject>false</IsTestProject>
         <IsPackable>false</IsPackable>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackageId>Anduin.Parser.FFmpeg</PackageId>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Parser.Core\Parser.Core.csproj" />
+        <ProjectReference Include="..\Anduin.Parser.Core\Anduin.Parser.Core.csproj" />
     </ItemGroup>
 </Project>

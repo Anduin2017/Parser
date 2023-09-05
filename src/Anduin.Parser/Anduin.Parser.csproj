@@ -28,6 +28,6 @@
         <RepositoryUrl>https://gitlab.aiursoft.cn/Anduin/Parser</RepositoryUrl>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Parser.FFmpeg\Parser.FFmpeg.csproj" />
+        <ProjectReference Include="..\Anduin.Parser.FFmpeg\Anduin.Parser.FFmpeg.csproj" />
     </ItemGroup>
 </Project>
