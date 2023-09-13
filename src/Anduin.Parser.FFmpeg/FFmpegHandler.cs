@@ -3,6 +3,7 @@ using System.CommandLine;
 using Aiursoft.CommandFramework.Framework;
 using Aiursoft.CommandFramework.Models;
 using Aiursoft.CommandFramework.Services;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Anduin.Parser.FFmpeg;
@@ -45,9 +46,12 @@ public class FFmpegHandler : CommandHandler
 
     private Task ExecuteOverride(string path, bool dryRun, bool verbose, bool useGpu, int crf)
     {
-        var services = ServiceBuilder.BuildServices<StartUp>(verbose);
-        services.AddSingleton(new FFmpegOptions { UseGpu = useGpu, Crf = crf });
-        var serviceProvider = services.BuildServiceProvider();
+        var hostBuilder = ServiceBuilder.BuildHost<StartUp>(verbose);
+        hostBuilder.ConfigureServices(services => 
+        {
+            services.AddSingleton(new FFmpegOptions { UseGpu = useGpu, Crf = crf });
+        });
+        var serviceProvider = hostBuilder.Build().Services;
         var logger = serviceProvider.GetRequiredService<ILogger<FFmpegHandler>>();
         var entry = serviceProvider.GetRequiredService<FFmpegEntry>();
         var fullPath = Path.GetFullPath(path);
