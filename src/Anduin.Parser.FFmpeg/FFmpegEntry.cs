@@ -123,7 +123,7 @@ namespace Anduin.Parser.FFmpeg
                 ConvertFileSizeToMb(sourceFileInfo.Length - targetFileInfo.Length));
 
             // ReSharper disable once MergeIntoPattern
-            if (targetFileInfo.Exists && targetFileInfo.Length > 8 * MbToBytes)
+            if (targetFileInfo.Exists && targetFileInfo.Length > 1 * MbToBytes)
             {
                 _logger.LogWarning("{TargetFilePath} parsed file exists. Deleting source file...", targetFilePath);
                 File.Delete(sourceFilePath);
