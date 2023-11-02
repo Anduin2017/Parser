@@ -1,6 +1,5 @@
-﻿using System.CommandLine;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Reflection;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Aiursoft.CommandFramework;
 using Aiursoft.CommandFramework.Extensions;
 using Anduin.Parser.Core.Framework;
 using Anduin.Parser.FFmpeg;
@@ -10,54 +9,54 @@ namespace Parser.Tests;
 [TestClass]
 public class IntegrationTests
 {
-    private readonly RootCommand _program;
+    private readonly AiursoftCommand _program;
     private readonly string _testVideo;
 
     public IntegrationTests()
     {
-        var descriptionAttribute = (Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()).GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
-
+        _program = new AiursoftCommand()
+            .Configure(command =>
+            {
+                command
+                    .AddGlobalOptions()
+                    .AddPlugins(new FFmpegPlugin());
+            });
         _testVideo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "test_video.mp4");
-        _program = new RootCommand(descriptionAttribute ?? "Unknown usage.")
-            .AddGlobalOptions()
-            .AddPlugins(
-                new FFmpegPlugin()
-            );
     }
 
     [TestMethod]
     public async Task InvokeHelp()
     {
-        var result = await _program.InvokeAsync(new[] { "--help" });
-        Assert.AreEqual(0, result);
+        var result = await _program.TestRunAsync(new[] { "--help" });
+        Assert.AreEqual(0, result.ProgramReturn);
     }
 
     [TestMethod]
     public async Task InvokeVersion()
     {
-        var result = await _program.InvokeAsync(new[] { "--version" });
-        Assert.AreEqual(0, result);
+        var result = await _program.TestRunAsync(new[] { "--version" });
+        Assert.AreEqual(0, result.ProgramReturn);
     }
 
     [TestMethod]
     public async Task InvokeUnknown()
     {
-        var result = await _program.InvokeAsync(new[] { "--wtf" });
-        Assert.AreEqual(1, result);
+        var result = await _program.TestRunAsync(new[] { "--wtf" });
+        Assert.AreEqual(1, result.ProgramReturn);
     }
 
     [TestMethod]
     public async Task InvokeWithoutArg()
     {
-        var result = await _program.InvokeAsync(Array.Empty<string>());
-        Assert.AreEqual(1, result);
+        var result = await _program.TestRunAsync(Array.Empty<string>());
+        Assert.AreEqual(1, result.ProgramReturn);
     }
 
     [TestMethod]
     public async Task InvokeFFmpegWithoutArg()
     {
-        var result = await _program.InvokeAsync(new[] { "ffmpeg" });
-        Assert.AreEqual(1, result);
+        var result = await _program.TestRunAsync(new[] { "ffmpeg" });
+        Assert.AreEqual(1, result.ProgramReturn);
     }
 
     [TestMethod]
@@ -73,7 +72,7 @@ public class IntegrationTests
         File.Copy(_testVideo, tempFile);
 
         // Run
-        var result = await _program.InvokeAsync(new[]
+        var result = await _program.TestRunAsync(new[]
         {
             "ffmpeg",
             "--path",
@@ -81,7 +80,7 @@ public class IntegrationTests
         });
 
         // Assert
-        Assert.AreEqual(0, result);
+        Assert.AreEqual(0, result.ProgramReturn);
         Assert.IsTrue(File.Exists(Path.Combine(tempFolder, "test-video_265.mp4")));
         Assert.IsFalse(File.Exists(tempFile));
 
