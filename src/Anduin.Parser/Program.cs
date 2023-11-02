@@ -8,6 +8,8 @@ return await new AiursoftCommand()
     {
         command
             .AddGlobalOptions()
-            .AddPlugins(new FFmpegPlugin());
+            .AddPlugins(
+                new FFmpegPlugin()
+            );
     })
     .RunAsync(args);

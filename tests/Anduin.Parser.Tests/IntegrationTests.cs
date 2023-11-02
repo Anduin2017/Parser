@@ -19,7 +19,9 @@ public class IntegrationTests
             {
                 command
                     .AddGlobalOptions()
-                    .AddPlugins(new FFmpegPlugin());
+                    .AddPlugins(
+                        new FFmpegPlugin()
+                    );
             });
         _testVideo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "test_video.mp4");
     }
