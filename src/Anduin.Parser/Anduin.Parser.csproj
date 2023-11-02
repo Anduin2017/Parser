@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <Version>7.0.1</Version>
+        <Version>7.0.2</Version>
         <TargetFramework>net7.0</TargetFramework>
         <AssemblyName>parser</AssemblyName>
         <RootNamespace>Anduin.Parser</RootNamespace>
@@ -26,6 +26,7 @@
         <PackageProjectUrl>https://gitlab.aiursoft.cn/Anduin/Parser</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://gitlab.aiursoft.cn/Anduin/Parser</RepositoryUrl>
+        <PackageReadmeFile>../../README.md</PackageReadmeFile>
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Anduin.Parser.FFmpeg\Anduin.Parser.FFmpeg.csproj" />
