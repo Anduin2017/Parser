@@ -36,7 +36,7 @@ public class FFmpegHandler : CommandHandler
     public override void OnCommandBuilt(Command command)
     {
         command.SetHandler(
-            ExecuteOverride,
+            Execute,
             CommonOptionsProvider.PathOptions,
             CommonOptionsProvider.DryRunOption,
             CommonOptionsProvider.VerboseOption,
@@ -44,7 +44,7 @@ public class FFmpegHandler : CommandHandler
             _crf);
     }
 
-    private Task ExecuteOverride(string path, bool dryRun, bool verbose, bool useGpu, int crf)
+    private Task Execute(string path, bool dryRun, bool verbose, bool useGpu, int crf)
     {
         var hostBuilder = ServiceBuilder.BuildHost<StartUp>(verbose);
         hostBuilder.ConfigureServices(services => 
