@@ -78,7 +78,8 @@ public class IntegrationTests
         {
             "ffmpeg",
             "--path",
-            tempFolder
+            tempFolder,
+            "-g"
         });
 
         // Assert

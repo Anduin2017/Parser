@@ -1,5 +1,5 @@
 ﻿using Aiursoft.CommandFramework.Abstracts;
-using Anduin.Parser.FFmpeg.Services;
+using Aiursoft.CSTools.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Anduin.Parser.FFmpeg;

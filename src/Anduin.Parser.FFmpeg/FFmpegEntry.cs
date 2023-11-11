@@ -1,4 +1,4 @@
-﻿using Anduin.Parser.FFmpeg.Services;
+﻿using Aiursoft.CSTools.Services;
 using Microsoft.Extensions.Logging;
 
 namespace Anduin.Parser.FFmpeg
@@ -44,7 +44,7 @@ namespace Anduin.Parser.FFmpeg
             var baseFileInfo = await _commandService.RunCommandAsync("ffmpeg", $@"-i ""{filePath}""", folder);
             var fileInfo = new FileInfo(filePath);
 
-            if (ShouldParseVideo(baseFileInfo, fileInfo))
+            if (ShouldParseVideo(baseFileInfo.error, fileInfo))
             {
                 var newFileName = GetNewFileName(fileInfo);
                 if (shouldTakeAction)
