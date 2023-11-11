@@ -71,6 +71,39 @@ public class IntegrationTests
         {
             Directory.CreateDirectory(tempFolder);
         }
+
+        File.Copy(_testVideo, tempFile);
+
+        // Run
+        var result = await _program.TestRunAsync(new[]
+        {
+            "ffmpeg",
+            "--path",
+            tempFolder
+        });
+
+        // Assert
+        Assert.AreEqual(0, result.ProgramReturn);
+        Assert.IsTrue(File.Exists(Path.Combine(tempFolder, "test-video_265.mp4")));
+        Assert.IsFalse(File.Exists(tempFile));
+
+        // Clean
+        Directory.Delete(tempFolder, true);
+    }
+
+    // Ignore the next test:
+    [TestMethod]
+    [Ignore]
+    public async Task TestWithGpu()
+    {
+        // Prepare
+        var tempFolder = Path.Combine(Path.GetTempPath(), $"Parser-UT-{Guid.NewGuid()}");
+        var tempFile = Path.Combine(tempFolder, "test-video.mp4");
+        if (!Directory.Exists(tempFolder))
+        {
+            Directory.CreateDirectory(tempFolder);
+        }
+
         File.Copy(_testVideo, tempFile);
 
         // Run
