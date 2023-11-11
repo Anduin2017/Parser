@@ -94,7 +94,7 @@ public class IntegrationTests
     // Ignore the next test:
     [TestMethod]
     [Ignore]
-    public async Task TestWithGpu()
+    public async Task InvokeFFmpegWithGpu()
     {
         // Prepare
         var tempFolder = Path.Combine(Path.GetTempPath(), $"Parser-UT-{Guid.NewGuid()}");
