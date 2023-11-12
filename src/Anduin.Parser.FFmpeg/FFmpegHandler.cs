@@ -46,7 +46,7 @@ public class FFmpegHandler : CommandHandler
 
     private Task Execute(string path, bool dryRun, bool verbose, bool useGpu, int crf)
     {
-        var hostBuilder = ServiceBuilder.BuildHost<StartUp>(verbose);
+        var hostBuilder = ServiceBuilder.CreateCommandHostBuilder<StartUp>(verbose);
         hostBuilder.ConfigureServices(services => 
         {
             services.AddSingleton(new FFmpegOptions { UseGpu = useGpu, Crf = crf });
