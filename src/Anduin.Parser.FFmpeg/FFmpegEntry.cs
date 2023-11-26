@@ -105,13 +105,13 @@ namespace Anduin.Parser.FFmpeg
             {
                 await _commandService.RunCommandAsync("ffmpeg",
                     $@"-i ""{sourceFilePath}"" -preset slow -codec:a copy -codec:v hevc_nvenc -rc:v vbr -cq:v {crf} -rc-lookahead 10 -profile:v main10 ""{targetFilePath}""",
-                    folder, getOutput: false);
+                    folder);
             }
             else
             {
                 await _commandService.RunCommandAsync("ffmpeg",
                     $@"-i ""{sourceFilePath}"" -preset slow -codec:a copy -codec:v libx265    -crf {crf} ""{targetFilePath}""",
-                    folder, getOutput: false);
+                    folder);
             }
 
             var sourceFileInfo = new FileInfo(sourceFilePath);

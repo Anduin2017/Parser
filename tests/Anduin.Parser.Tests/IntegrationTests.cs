@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Aiursoft.CommandFramework;
 using Aiursoft.CommandFramework.Extensions;
+using Aiursoft.CSTools.Tools;
 using Anduin.Parser.Core.Framework;
 using Anduin.Parser.FFmpeg;
 
@@ -88,7 +89,7 @@ public class IntegrationTests
         Assert.IsFalse(File.Exists(tempFile));
 
         // Clean
-        Directory.Delete(tempFolder, true);
+        FolderDeleter.DeleteByForce(tempFolder);
     }
 
     // Ignore the next test:
@@ -121,6 +122,6 @@ public class IntegrationTests
         Assert.IsFalse(File.Exists(tempFile));
 
         // Clean
-        Directory.Delete(tempFolder, true);
+        FolderDeleter.DeleteByForce(tempFolder);
     }
 }
