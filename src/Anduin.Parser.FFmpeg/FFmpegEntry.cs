@@ -101,17 +101,19 @@ namespace Anduin.Parser.FFmpeg
                 File.Delete(targetFilePath);
             }
 
+            int result; 
+            string error;
             if (gpu)
             {
-                await _commandService.RunCommandAsync("ffmpeg",
+                (result, _, error) = await _commandService.RunCommandAsync("ffmpeg",
                     $@"-i ""{sourceFilePath}"" -preset slow -codec:a copy -codec:v hevc_nvenc -rc:v vbr -cq:v {crf} -rc-lookahead 10 -profile:v main10 ""{targetFilePath}""",
-                    folder);
+                    folder, timeout: TimeSpan.FromMinutes(200));
             }
             else
             {
-                await _commandService.RunCommandAsync("ffmpeg",
+                (result, _, error) = await _commandService.RunCommandAsync("ffmpeg",
                     $@"-i ""{sourceFilePath}"" -preset slow -codec:a copy -codec:v libx265    -crf {crf} ""{targetFilePath}""",
-                    folder);
+                    folder, timeout: TimeSpan.FromMinutes(200));
             }
 
             var sourceFileInfo = new FileInfo(sourceFilePath);
@@ -123,7 +125,7 @@ namespace Anduin.Parser.FFmpeg
                 ConvertFileSizeToMb(sourceFileInfo.Length - targetFileInfo.Length));
 
             // ReSharper disable once MergeIntoPattern
-            if (targetFileInfo.Exists && targetFileInfo.Length > 1 * MbToBytes)
+            if (targetFileInfo.Exists && targetFileInfo.Length > 1 * MbToBytes && result == 0 && error.Contains("encoded"))
             {
                 _logger.LogWarning("{TargetFilePath} parsed file exists. Deleting source file...", targetFilePath);
                 File.Delete(sourceFilePath);
