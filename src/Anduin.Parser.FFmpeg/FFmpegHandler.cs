@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.CommandLine;
+using System.CommandLine.Invocation;
 using Aiursoft.CommandFramework.Framework;
 using Aiursoft.CommandFramework.Models;
 using Aiursoft.CommandFramework.Services;
@@ -8,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Anduin.Parser.FFmpeg;
 
-public class FFmpegHandler : CommandHandler
+public class FFmpegHandler : ExecutableCommandHandlerBuilder
 {
     private readonly Option<bool> _useGpu = new(
         getDefaultValue: () => false,
@@ -24,28 +25,13 @@ public class FFmpegHandler : CommandHandler
 
     public override string Description => "The command to convert all video files to HEVC using FFmpeg.";
 
-    public override Option[] GetCommandOptions()
+    protected override Task Execute(InvocationContext context)
     {
-        return new Option[]
-        {
-            _useGpu,
-            _crf
-        };
-    }
-
-    public override void OnCommandBuilt(Command command)
-    {
-        command.SetHandler(
-            Execute,
-            CommonOptionsProvider.PathOptions,
-            CommonOptionsProvider.DryRunOption,
-            CommonOptionsProvider.VerboseOption,
-            _useGpu,
-            _crf);
-    }
-
-    private Task Execute(string path, bool dryRun, bool verbose, bool useGpu, int crf)
-    {
+        var verbose = context.ParseResult.GetValueForOption(CommonOptionsProvider.VerboseOption);
+        var dryRun = context.ParseResult.GetValueForOption(CommonOptionsProvider.DryRunOption);
+        var path = context.ParseResult.GetValueForOption(CommonOptionsProvider.PathOptions)!;
+        var useGpu = context.ParseResult.GetValueForOption(_useGpu);
+        var crf = context.ParseResult.GetValueForOption(_crf);
         var hostBuilder = ServiceBuilder.CreateCommandHostBuilder<StartUp>(verbose);
         hostBuilder.ConfigureServices(services => 
         {
@@ -58,4 +44,10 @@ public class FFmpegHandler : CommandHandler
         logger.LogTrace("Starting service: FFmpeg Entry. Full path is: {FullPath}, Dry run is: {DryRun}", fullPath, dryRun);
         return entry.OnServiceStartedAsync(fullPath, shouldTakeAction: !dryRun);
     }
+
+    public override Option[] GetCommandOptions() => new Option[]
+    {
+        _useGpu,
+        _crf
+    };
 }

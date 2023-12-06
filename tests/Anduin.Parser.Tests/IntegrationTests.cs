@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Aiursoft.CommandFramework;
-using Aiursoft.CommandFramework.Extensions;
 using Aiursoft.CSTools.Tools;
-using Anduin.Parser.Core.Framework;
 using Anduin.Parser.FFmpeg;
 
 namespace Parser.Tests;
@@ -10,20 +8,14 @@ namespace Parser.Tests;
 [TestClass]
 public class IntegrationTests
 {
-    private readonly AiursoftCommand _program;
+    private readonly AiursoftCommandApp _program;
     private readonly string _testVideo;
 
     public IntegrationTests()
     {
-        _program = new AiursoftCommand()
-            .Configure(command =>
-            {
-                command
-                    .AddGlobalOptions()
-                    .AddPlugins(
-                        new FFmpegPlugin()
-                    );
-            });
+        var command = new FFmpegHandler().BuildAsCommand();
+
+        _program = new AiursoftCommandApp(command);
         _testVideo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "test_video.mp4");
     }
 

@@ -1,15 +1,9 @@
-﻿using Anduin.Parser.Core.Framework;
-using Anduin.Parser.FFmpeg;
+﻿using Anduin.Parser.FFmpeg;
 using Aiursoft.CommandFramework;
 using Aiursoft.CommandFramework.Extensions;
+using Aiursoft.CommandFramework.Models;
 
-return await new AiursoftCommand()
-    .Configure(command =>
-    {
-        command
-            .AddGlobalOptions()
-            .AddPlugins(
-                new FFmpegPlugin()
-            );
-    })
-    .RunAsync(args);
+var command = new FFmpegHandler().BuildAsCommand();
+
+return await new AiursoftCommandApp(command)
+    .RunAsync(args.WithDefaultTo(CommonOptionsProvider.PathOptions));
