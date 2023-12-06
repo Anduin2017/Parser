@@ -47,6 +47,9 @@ public class FFmpegHandler : ExecutableCommandHandlerBuilder
 
     public override Option[] GetCommandOptions() => new Option[]
     {
+        CommonOptionsProvider.PathOptions,
+        CommonOptionsProvider.VerboseOption,
+        CommonOptionsProvider.DryRunOption,
         _useGpu,
         _crf
     };

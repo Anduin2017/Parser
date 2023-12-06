@@ -70,7 +70,6 @@ public class IntegrationTests
         // Run
         var result = await _program.TestRunAsync(new[]
         {
-            "ffmpeg",
             "--path",
             tempFolder
         });
@@ -102,7 +101,6 @@ public class IntegrationTests
         // Run
         var result = await _program.TestRunAsync(new[]
         {
-            "ffmpeg",
             "--path",
             tempFolder,
             "-g"
