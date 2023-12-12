@@ -9,7 +9,7 @@ namespace Parser.Tests;
 [TestClass]
 public class IntegrationTests
 {
-    private readonly SingleCommandApp _program = new SingleCommandApp(new FFmpegHandler())
+    private readonly SingleCommandApp<FFmpegHandler> _program = new SingleCommandApp<FFmpegHandler>()
         .WithDefaultOption(CommonOptionsProvider.PathOptions);
     private readonly string _testVideo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "test_video.mp4");
 
