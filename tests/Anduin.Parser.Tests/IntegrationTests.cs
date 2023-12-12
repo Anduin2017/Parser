@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Aiursoft.CommandFramework;
+using Aiursoft.CommandFramework.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Aiursoft.CSTools.Tools;
 using Anduin.Parser.FFmpeg;
 
@@ -7,7 +9,8 @@ namespace Parser.Tests;
 [TestClass]
 public class IntegrationTests
 {
-    private readonly FFmpegHandler _program = new();
+    private readonly SingleCommandApp _program = new SingleCommandApp(new FFmpegHandler())
+        .WithDefaultOption(CommonOptionsProvider.PathOptions);
     private readonly string _testVideo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "test_video.mp4");
 
     [TestMethod]

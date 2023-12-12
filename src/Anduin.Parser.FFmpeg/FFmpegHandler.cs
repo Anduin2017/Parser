@@ -21,9 +21,9 @@ public class FFmpegHandler : ExecutableCommandHandlerBuilder
         aliases: new[] { "--crf", "-c" },
         description: "The range of the CRF scale is 0–51, where 0 is loss-less (for 8 bit only, for 10 bit use -qp 0), 20 is the default, and 51 is worst quality possible.");
 
-    public override string Name => "ffmpeg";
+    protected override string Name => "ffmpeg";
 
-    public override string Description => "The command to convert all video files to HEVC using FFmpeg.";
+    protected override string Description => "The command to convert all video files to HEVC using FFmpeg.";
 
     protected override Task Execute(InvocationContext context)
     {
@@ -45,7 +45,7 @@ public class FFmpegHandler : ExecutableCommandHandlerBuilder
         return entry.OnServiceStartedAsync(fullPath, shouldTakeAction: !dryRun);
     }
 
-    public override Option[] GetCommandOptions() => new Option[]
+    protected override Option[] GetCommandOptions() => new Option[]
     {
         CommonOptionsProvider.PathOptions,
         CommonOptionsProvider.VerboseOption,
