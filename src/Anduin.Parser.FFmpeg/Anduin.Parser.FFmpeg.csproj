@@ -14,6 +14,6 @@
     <ProjectReference Include="..\Anduin.Parser.Core\Anduin.Parser.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Aiursoft.CSTools" Version="7.0.6" />
+    <PackageReference Include="Aiursoft.CSTools" Version="7.0.9" />
   </ItemGroup>
 </Project>
