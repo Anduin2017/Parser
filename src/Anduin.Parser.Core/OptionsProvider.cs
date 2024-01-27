@@ -1,7 +1,7 @@
 ﻿using System.CommandLine;
 using Aiursoft.CommandFramework.Models;
 
-namespace Anduin.Parser.Core.Framework;
+namespace Anduin.Parser.Core;
 
 public static class OptionsProvider
 {

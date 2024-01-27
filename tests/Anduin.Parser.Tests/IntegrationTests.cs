@@ -1,10 +1,10 @@
 ﻿using Aiursoft.CommandFramework;
 using Aiursoft.CommandFramework.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Aiursoft.CSTools.Tools;
 using Anduin.Parser.FFmpeg;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Parser.Tests;
+namespace Anduin.Parser.Tests;
 
 [TestClass]
 public class IntegrationTests
