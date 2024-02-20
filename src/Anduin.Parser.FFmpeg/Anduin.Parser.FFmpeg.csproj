@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>Anduin.Parser.FFmpeg</AssemblyName>
     <RootNamespace>Anduin.Parser.FFmpeg</RootNamespace>
     <IsTestProject>false</IsTestProject>
@@ -14,6 +14,6 @@
     <ProjectReference Include="..\Anduin.Parser.Core\Anduin.Parser.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Aiursoft.CSTools" Version="7.0.14" />
+    <PackageReference Include="Aiursoft.CSTools" Version="8.0.1" />
   </ItemGroup>
 </Project>
