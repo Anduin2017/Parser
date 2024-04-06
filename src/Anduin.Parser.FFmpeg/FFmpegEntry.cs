@@ -103,17 +103,24 @@ namespace Anduin.Parser.FFmpeg
 
             int result; 
             string error;
+            string output;
             if (gpu)
             {
-                (result, _, error) = await _commandService.RunCommandAsync("ffmpeg",
+                (result, output, error) = await _commandService.RunCommandAsync("ffmpeg",
                     $@"-i ""{sourceFilePath}"" -preset slow -codec:a copy -codec:v hevc_nvenc -rc:v vbr -cq:v {crf} -rc-lookahead 10 -profile:v main10 ""{targetFilePath}""",
                     folder, timeout: TimeSpan.FromMinutes(200));
             }
             else
             {
-                (result, _, error) = await _commandService.RunCommandAsync("ffmpeg",
+                (result, output, error) = await _commandService.RunCommandAsync("ffmpeg",
                     $@"-i ""{sourceFilePath}"" -preset slow -codec:a copy -codec:v libx265    -crf {crf} ""{targetFilePath}""",
                     folder, timeout: TimeSpan.FromMinutes(200));
+            }
+            
+            if (result != 0)
+            {
+                throw new Exception("FFmpeg failed to parse the video: " + sourceFilePath + ". Output: " + output +
+                                    ". Error: " + error);
             }
 
             var sourceFileInfo = new FileInfo(sourceFilePath);
@@ -125,7 +132,7 @@ namespace Anduin.Parser.FFmpeg
                 ConvertFileSizeToMb(sourceFileInfo.Length - targetFileInfo.Length));
 
             // ReSharper disable once MergeIntoPattern
-            if (targetFileInfo.Exists && targetFileInfo.Length > 1 * MbToBytes && result == 0 && error.Contains("encoded"))
+            if (targetFileInfo.Exists && targetFileInfo.Length > 1 * MbToBytes && error.Contains("encoded"))
             {
                 _logger.LogWarning("{TargetFilePath} parsed file exists. Deleting source file...", targetFilePath);
                 File.Delete(sourceFilePath);
