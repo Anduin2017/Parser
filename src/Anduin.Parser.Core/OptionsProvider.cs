@@ -7,12 +7,12 @@ public static class OptionsProvider
 {
     private static Option[] GetGlobalOptions()
     {
-        return new Option[]
-        {
+        return
+        [
             CommonOptionsProvider.PathOptions,
             CommonOptionsProvider.DryRunOption,
-            CommonOptionsProvider.VerboseOption,
-        };
+            CommonOptionsProvider.VerboseOption
+        ];
     }
 
     public static Command AddGlobalOptions(this Command command)

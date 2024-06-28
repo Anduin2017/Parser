@@ -13,12 +13,12 @@ public class FFmpegHandler : ExecutableCommandHandlerBuilder
 {
     private readonly Option<bool> _useGpu = new(
         getDefaultValue: () => false,
-        aliases: new[] { "--gpu", "-g" },
+        aliases: ["--gpu", "-g"],
         description: "Use NVIDIA GPU to speed up parsing. Only if you have an NVIDIA GPU attached.");
 
     private readonly Option<int> _crf = new(
         getDefaultValue: () => 20,
-        aliases: new[] { "--crf", "-c" },
+        aliases: ["--crf", "-c"],
         description: "The range of the CRF scale is 0–51, where 0 is loss-less (for 8 bit only, for 10 bit use -qp 0), 20 is the default, and 51 is worst quality possible.");
 
     protected override string Name => "ffmpeg";
@@ -45,12 +45,12 @@ public class FFmpegHandler : ExecutableCommandHandlerBuilder
         return entry.OnServiceStartedAsync(fullPath, shouldTakeAction: !dryRun);
     }
 
-    protected override Option[] GetCommandOptions() => new Option[]
-    {
+    protected override Option[] GetCommandOptions() =>
+    [
         CommonOptionsProvider.PathOptions,
         CommonOptionsProvider.VerboseOption,
         CommonOptionsProvider.DryRunOption,
         _useGpu,
         _crf
-    };
+    ];
 }
