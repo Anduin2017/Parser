@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <Version>8.0.9</Version>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>parser</AssemblyName>
     <RootNamespace>Anduin.Parser</RootNamespace>
     <IsTestProject>false</IsTestProject>
