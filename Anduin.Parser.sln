@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{00C03649
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anduin.Parser.Tests", "tests\Anduin.Parser.Tests\Anduin.Parser.Tests.csproj", "{7CFB1A71-0354-4929-8786-555BAD10D115}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anduin.Parser.Photos", "src\Anduin.Parser.Photos\Anduin.Parser.Photos.csproj", "{D5F35B27-DD07-4489-B652-299E5F2590B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{7CFB1A71-0354-4929-8786-555BAD10D115}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CFB1A71-0354-4929-8786-555BAD10D115}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CFB1A71-0354-4929-8786-555BAD10D115}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5F35B27-DD07-4489-B652-299E5F2590B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5F35B27-DD07-4489-B652-299E5F2590B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5F35B27-DD07-4489-B652-299E5F2590B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5F35B27-DD07-4489-B652-299E5F2590B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{8BB6EA69-6487-4709-B329-65B2F26DBDC2} = {C3378506-CFC5-4A6D-BF31-E34D2F49830A}
 		{50D3CEAA-D632-4678-BE04-3F1B468B5B96} = {C3378506-CFC5-4A6D-BF31-E34D2F49830A}
 		{7CFB1A71-0354-4929-8786-555BAD10D115} = {00C03649-1C34-421C-8399-2F6323C41E39}
+		{D5F35B27-DD07-4489-B652-299E5F2590B6} = {C3378506-CFC5-4A6D-BF31-E34D2F49830A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAA83CF2-A10A-43F1-B402-562B894ACF5D}

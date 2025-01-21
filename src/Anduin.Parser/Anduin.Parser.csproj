@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <Version>8.0.10</Version>
+    <Version>9.0.7</Version>
     <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>parser</AssemblyName>
     <RootNamespace>Anduin.Parser</RootNamespace>
@@ -30,6 +30,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Anduin.Parser.FFmpeg\Anduin.Parser.FFmpeg.csproj" />
+    <ProjectReference Include="..\Anduin.Parser.Photos\Anduin.Parser.Photos.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="." />

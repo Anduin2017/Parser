@@ -9,6 +9,13 @@ using Microsoft.Extensions.Logging;
 
 namespace Anduin.Parser.FFmpeg;
 
+public enum DuplicateAction
+{
+    Nothing,
+    Delete,
+    MoveToTrash
+}
+
 public class FFmpegHandler : ExecutableCommandHandlerBuilder
 {
     private readonly Option<bool> _useGpu = new(
@@ -21,6 +28,11 @@ public class FFmpegHandler : ExecutableCommandHandlerBuilder
         aliases: ["--crf", "-c"],
         description: "The range of the CRF scale is 0–51, where 0 is loss-less (for 8 bit only, for 10 bit use -qp 0), 20 is the default, and 51 is worst quality possible.");
 
+    private readonly Option<DuplicateAction> _actionOption = new(
+        ["--action", "-a"],
+        () => DuplicateAction.MoveToTrash,
+        "Action to take when files are parsed. Available options: Nothing, Delete, MoveToTrash.");
+    
     protected override string Name => "ffmpeg";
 
     protected override string Description => "The command to convert all video files to HEVC using FFmpeg.";
@@ -32,6 +44,7 @@ public class FFmpegHandler : ExecutableCommandHandlerBuilder
         var path = context.ParseResult.GetValueForOption(CommonOptionsProvider.PathOptions)!;
         var useGpu = context.ParseResult.GetValueForOption(_useGpu);
         var crf = context.ParseResult.GetValueForOption(_crf);
+        var action = context.ParseResult.GetValueForOption(_actionOption);
         var hostBuilder = ServiceBuilder.CreateCommandHostBuilder<StartUp>(verbose);
         hostBuilder.ConfigureServices(services => 
         {
@@ -42,7 +55,7 @@ public class FFmpegHandler : ExecutableCommandHandlerBuilder
         var entry = serviceProvider.GetRequiredService<FFmpegEntry>();
         var fullPath = Path.GetFullPath(path);
         logger.LogTrace("Starting service: FFmpeg Entry. Full path is: {FullPath}, Dry run is: {DryRun}", fullPath, dryRun);
-        return entry.OnServiceStartedAsync(fullPath, shouldTakeAction: !dryRun);
+        return entry.OnServiceStartedAsync(fullPath, shouldTakeAction: !dryRun, action: action);
     }
 
     protected override Option[] GetCommandOptions() =>
@@ -51,6 +64,7 @@ public class FFmpegHandler : ExecutableCommandHandlerBuilder
         CommonOptionsProvider.VerboseOption,
         CommonOptionsProvider.DryRunOption,
         _useGpu,
-        _crf
+        _crf,
+        _actionOption
     ];
 }
