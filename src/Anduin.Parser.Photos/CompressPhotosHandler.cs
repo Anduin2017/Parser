@@ -19,17 +19,22 @@ public class CompressPhotosHandler : ExecutableCommandHandlerBuilder
         getDefaultValue: () => 10,
         aliases: ["--filter-only-if-larger-than", "-f"],
         description: "Only compress photos larger than this size in MB. Default is 10.");
-    
+
     private readonly Option<bool> _deleteOriginal = new(
         getDefaultValue: () => false,
         aliases: ["--delete", "-del"],
         description: "Delete the original photo after compressing.");
-    
+
+    private readonly Option<bool> _keepOriginalName = new(
+        getDefaultValue: () => false,
+        aliases: ["--keep-name", "-kn"],
+        description: "After deleting the original photo, rename the compressed photo to the original name.");
+
     private readonly Option<string[]> _fileExtensions = new(
         getDefaultValue: () => new[] { ".jpg", ".jpeg", ".png", ".bmp" },
         aliases: ["--extensions", "-e"],
         description: "The file extensions to compress. Default is '.jpg', '.jpeg', '.png', '.bmp'.");
-    
+
     protected override string Name => "compress-photos";
 
     protected override string Description => "The command to compress all photos to a smaller size.";
@@ -42,15 +47,23 @@ public class CompressPhotosHandler : ExecutableCommandHandlerBuilder
         var scale = context.ParseResult.GetValueForOption(_scale);
         var onlyIfPhotoLargerThanMb = context.ParseResult.GetValueForOption(_onlyIfPhotoLargerThanMb);
         var deleteOriginal = context.ParseResult.GetValueForOption(_deleteOriginal);
+        var keepOriginalName = context.ParseResult.GetValueForOption(_keepOriginalName);
         var extensions = context.ParseResult.GetValueForOption(_fileExtensions)!;
-        
+
         var hostBuilder = ServiceBuilder.CreateCommandHostBuilder<StartUp>(verbose);
         var serviceProvider = hostBuilder.Build().Services;
         var logger = serviceProvider.GetRequiredService<ILogger<CompressPhotosHandler>>();
         var entry = serviceProvider.GetRequiredService<CompressEntry>();
         var fullPath = Path.GetFullPath(path);
         logger.LogTrace("Starting service: Compress Entry. Full path is: {FullPath}, Dry run is: {DryRun}, Scale is: {Scale}, OnlyIfPhotoLargerThanMb is: {OnlyIfPhotoLargerThanMb}, DeleteOriginal is: {DeleteOriginal}, Extensions are: {Extensions}", fullPath, dryRun, scale, onlyIfPhotoLargerThanMb, deleteOriginal, extensions);
-        return entry.OnServiceStartedAsync(fullPath, shouldTakeAction: !dryRun, scale: scale, onlyIfPhotoLargerThanMb: onlyIfPhotoLargerThanMb, deleteOriginal: deleteOriginal, extensions: extensions);
+        return entry.OnServiceStartedAsync(
+            fullPath,
+            shouldTakeAction: !dryRun,
+            scale: scale,
+            onlyIfPhotoLargerThanMb: onlyIfPhotoLargerThanMb,
+            deleteOriginal: deleteOriginal,
+            useOriginalName: keepOriginalName,
+            extensions: extensions);
     }
 
     protected override Option[] GetCommandOptions() =>
@@ -61,6 +74,7 @@ public class CompressPhotosHandler : ExecutableCommandHandlerBuilder
         _scale,
         _onlyIfPhotoLargerThanMb,
         _deleteOriginal,
+        _keepOriginalName,
         _fileExtensions
     ];
 }
