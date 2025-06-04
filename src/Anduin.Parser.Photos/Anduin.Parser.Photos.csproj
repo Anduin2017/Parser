@@ -13,6 +13,6 @@
     <ProjectReference Include="..\Anduin.Parser.Core\Anduin.Parser.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.8" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.9" />
   </ItemGroup>
 </Project>
