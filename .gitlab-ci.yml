@@ -123,7 +123,6 @@ deploy_docker_registry:
     - test
   script:
     - if [ "$CI_COMMIT_REF_NAME" = "master" ]; then TAG="latest"; else TAG="$CI_COMMIT_REF_NAME"; fi
-<<<<<<< HEAD
     - echo building image hub.aiursoft.cn/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$TAG
     - docker build . -t hub.aiursoft.cn/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:latest
     - echo "Logging in to Docker Registry hub.aiursoft.cn..."
@@ -131,13 +130,6 @@ deploy_docker_registry:
     - docker save ${CI_PROJECT_NAMESPACE}/$CI_PROJECT_NAME:$TAG -o temp.tar
     - regctl image import hub.aiursoft.cn/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$TAG temp.tar
     - rm ./temp.tar
-=======
-    - echo building image registry.aiursoft.cn/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$TAG
-    - docker build . -t registry.aiursoft.cn/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:latest
-    - echo "Logging in to Docker Registry..."
-    - echo "$LOCAL_DOCKER_PASSWORD" | docker login registry.aiursoft.cn -u "$LOCAL_DOCKER_USERNAME" --password-stdin
-    - docker push registry.aiursoft.cn/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:latest
->>>>>>> 23c06d27130cae1d49a3a8328047eba432951f86
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
       exists:
