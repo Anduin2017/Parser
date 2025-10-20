@@ -2,7 +2,6 @@ using Aiursoft.CommandFramework;
 using Aiursoft.CommandFramework.Models;
 using Aiursoft.CSTools.Tools;
 using Anduin.Parser.Photos;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Anduin.Parser.Tests;
 

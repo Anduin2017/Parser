@@ -2,7 +2,8 @@
 using Aiursoft.CommandFramework.Models;
 using Aiursoft.CSTools.Tools;
 using Anduin.Parser.FFmpeg;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+[assembly:DoNotParallelize]
 
 namespace Anduin.Parser.Tests;
 
