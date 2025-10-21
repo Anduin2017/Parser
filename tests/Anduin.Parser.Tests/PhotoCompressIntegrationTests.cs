@@ -63,7 +63,7 @@ public class PhotoCompressionIntegrationTests
             var fileName = Path.GetFileName(file);
             File.Copy(file, Path.Combine(tempFolder, fileName));
         }
-        
+
         // Run
         // Delete original photos
         var result = await _program.TestRunAsync([
@@ -78,8 +78,8 @@ public class PhotoCompressionIntegrationTests
         // p1 should be compressed and deleted.
         Assert.IsFalse(File.Exists(Path.Combine(tempFolder, "p1.jpg")));
         Assert.IsTrue(File.Exists(Path.Combine(tempFolder, "p1_comp.jpg")));
-        Assert.IsTrue(new FileInfo(Path.Combine(tempFolder, "p1_comp.jpg")).Length < 3 * 1024 * 1024);
-        
+        Assert.IsLessThan(3 * 1024 * 1024, new FileInfo(Path.Combine(tempFolder, "p1_comp.jpg")).Length);
+
         // Clean
         FolderDeleter.DeleteByForce(tempFolder);
     }
