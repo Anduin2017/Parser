@@ -11,7 +11,7 @@
     <PackageId>Anduin.Parser.Core</PackageId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Aiursoft.CommandFramework" Version="9.0.12" />
+    <PackageReference Include="Aiursoft.CommandFramework" Version="9.0.13" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="9.0.10" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.10" />
   </ItemGroup>
