@@ -23,9 +23,9 @@
     <PackageId>Anduin.Parser</PackageId>
     <PackageTags>cli nuget dotnet ffmpeg</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://gitlab.aiursoft.cn/Anduin/Parser</PackageProjectUrl>
+    <PackageProjectUrl>https://gitlab.aiursoft.com/Anduin/Parser</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://gitlab.aiursoft.cn/Anduin/Parser</RepositoryUrl>
+    <RepositoryUrl>https://gitlab.aiursoft.com/Anduin/Parser</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
