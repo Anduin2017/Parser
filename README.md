@@ -4,7 +4,7 @@
 [![Pipeline stat](https://gitlab.aiursoft.com/anduin/parser/badges/master/pipeline.svg)](https://gitlab.aiursoft.com/anduin/parser/-/pipelines)
 [![Test Coverage](https://gitlab.aiursoft.com/anduin/parser/badges/master/coverage.svg)](https://gitlab.aiursoft.com/anduin/parser/-/pipelines)
 [![NuGet version](https://img.shields.io/nuget/v/Anduin.Parser.svg)](https://www.nuget.org/packages/Anduin.Parser/)
-[![ManHours](https://manhours.aiursoft.cn/r/gitlab.aiursoft.com/anduin/parser.svg)](https://gitlab.aiursoft.com/anduin/parser/-/commits/master?ref_type=heads)
+[![ManHours](https://manhours.aiursoft.com/r/gitlab.aiursoft.com/anduin/parser.svg)](https://gitlab.aiursoft.com/anduin/parser/-/commits/master?ref_type=heads)
 
 A small project helps me to parse and save my videos.
 
