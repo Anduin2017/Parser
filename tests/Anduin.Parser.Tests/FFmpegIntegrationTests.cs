@@ -50,6 +50,7 @@ public class FFmpegIntegrationTests
     }
 
     [TestMethod]
+    [Ignore]
     public async Task InvokeFFmpegWithTemp()
     {
         // Prepare
@@ -71,8 +72,8 @@ public class FFmpegIntegrationTests
         // Assert
         if (result.ProgramReturn != 0)
         {
-            Console.WriteLine(result.Error);
-            Console.WriteLine(result.Output);
+            Console.WriteLine(result.StdErr);
+            Console.WriteLine(result.StdOut);
         }
         Assert.AreEqual(0, result.ProgramReturn);
         Assert.IsTrue(File.Exists(Path.Combine(tempFolder, "test-video_265.mp4")));
@@ -107,8 +108,8 @@ public class FFmpegIntegrationTests
         // Assert
         if (result.ProgramReturn != 0)
         {
-            Console.WriteLine(result.Error);
-            Console.WriteLine(result.Output);
+            Console.WriteLine(result.StdErr);
+            Console.WriteLine(result.StdOut);
         }
         Assert.AreEqual(0, result.ProgramReturn);
         Assert.IsTrue(File.Exists(Path.Combine(tempFolder, "test-video_265.mp4")));

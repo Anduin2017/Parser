@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Anduin.Parser.FFmpeg</AssemblyName>
     <RootNamespace>Anduin.Parser.FFmpeg</RootNamespace>
     <IsTestProject>false</IsTestProject>
@@ -11,9 +11,7 @@
     <PackageId>Anduin.Parser.FFmpeg</PackageId>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Anduin.Parser.Core\Anduin.Parser.Core.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Aiursoft.CSTools" Version="9.0.3" />
+    <PackageReference Include="Aiursoft.CommandFramework" Version="10.0.1" />
+    <PackageReference Include="Aiursoft.CSTools" Version="10.0.0" />
   </ItemGroup>
 </Project>

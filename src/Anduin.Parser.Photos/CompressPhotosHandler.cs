@@ -11,44 +11,59 @@ namespace Anduin.Parser.Photos;
 public class CompressPhotosHandler : ExecutableCommandHandlerBuilder
 {
     private readonly Option<double> _scale = new(
-        getDefaultValue: () => 0.5,
-        aliases: ["--scale", "-s"],
-        description: "The range of the scale is 0-1, where 0 is empty, 1 is the original size. Default is 0.5.");
+        name: "--scale",
+        aliases: ["-s"])
+    {
+        DefaultValueFactory = _ => 0.5,
+        Description = "The range of the scale is 0-1, where 0 is empty, 1 is the original size. Default is 0.5."
+    };
 
     private readonly Option<int> _onlyIfPhotoLargerThanMb = new(
-        getDefaultValue: () => 10,
-        aliases: ["--filter-only-if-larger-than", "-f"],
-        description: "Only compress photos larger than this size in MB. Default is 10.");
+        name: "--filter-only-if-larger-than",
+        aliases: ["-f"])
+    {
+        DefaultValueFactory = _ => 10,
+        Description = "Only compress photos larger than this size in MB. Default is 10."
+    };
 
     private readonly Option<bool> _deleteOriginal = new(
-        getDefaultValue: () => false,
-        aliases: ["--delete", "-del"],
-        description: "Delete the original photo after compressing.");
+        name: "--delete",
+        aliases: ["-del"])
+    {
+        DefaultValueFactory = _ => false,
+        Description = "Delete the original photo after compressing."
+    };
 
     private readonly Option<bool> _keepOriginalName = new(
-        getDefaultValue: () => false,
-        aliases: ["--keep-name", "-kn"],
-        description: "After deleting the original photo, rename the compressed photo to the original name.");
+        name: "--keep-name",
+        aliases: ["-kn"])
+    {
+        DefaultValueFactory = _ => false,
+        Description = "After deleting the original photo, rename the compressed photo to the original name."
+    };
 
     private readonly Option<string[]> _fileExtensions = new(
-        getDefaultValue: () => new[] { ".jpg", ".jpeg", ".png", ".bmp" },
-        aliases: ["--extensions", "-e"],
-        description: "The file extensions to compress. Default is '.jpg', '.jpeg', '.png', '.bmp'.");
+        name: "--extensions",
+        aliases: ["-e"])
+    {
+        DefaultValueFactory = _ => new[] { ".jpg", ".jpeg", ".png", ".bmp" },
+        Description = "The file extensions to compress. Default is '.jpg', '.jpeg', '.png', '.bmp'."
+    };
 
     protected override string Name => "compress-photos";
 
     protected override string Description => "The command to compress all photos to a smaller size.";
 
-    protected override Task Execute(InvocationContext context)
+    protected override Task Execute(ParseResult context)
     {
-        var verbose = context.ParseResult.GetValueForOption(CommonOptionsProvider.VerboseOption);
-        var dryRun = context.ParseResult.GetValueForOption(CommonOptionsProvider.DryRunOption);
-        var path = context.ParseResult.GetValueForOption(CommonOptionsProvider.PathOptions)!;
-        var scale = context.ParseResult.GetValueForOption(_scale);
-        var onlyIfPhotoLargerThanMb = context.ParseResult.GetValueForOption(_onlyIfPhotoLargerThanMb);
-        var deleteOriginal = context.ParseResult.GetValueForOption(_deleteOriginal);
-        var keepOriginalName = context.ParseResult.GetValueForOption(_keepOriginalName);
-        var extensions = context.ParseResult.GetValueForOption(_fileExtensions)!;
+        var verbose = context.GetValue(CommonOptionsProvider.VerboseOption);
+        var dryRun = context.GetValue(CommonOptionsProvider.DryRunOption);
+        var path = context.GetValue(CommonOptionsProvider.PathOptions)!;
+        var scale = context.GetValue(_scale);
+        var onlyIfPhotoLargerThanMb = context.GetValue(_onlyIfPhotoLargerThanMb);
+        var deleteOriginal = context.GetValue(_deleteOriginal);
+        var keepOriginalName = context.GetValue(_keepOriginalName);
+        var extensions = context.GetValue(_fileExtensions)!;
 
         var hostBuilder = ServiceBuilder.CreateCommandHostBuilder<StartUp>(verbose);
         var serviceProvider = hostBuilder.Build().Services;

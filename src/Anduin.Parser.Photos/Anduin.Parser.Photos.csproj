@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Anduin.Parser.Photos</AssemblyName>
     <RootNamespace>Anduin.Parser.Photos</RootNamespace>
     <IsTestProject>false</IsTestProject>
@@ -10,9 +10,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Anduin.Parser.Core\Anduin.Parser.Core.csproj" />
-  </ItemGroup>
-  <ItemGroup>
+    <PackageReference Include="Aiursoft.CommandFramework" Version="10.0.1" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
   </ItemGroup>
 </Project>
