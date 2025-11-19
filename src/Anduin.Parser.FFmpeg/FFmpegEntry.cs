@@ -45,7 +45,7 @@ public class FFmpegEntry(
     }
 
     /// <summary>
-    /// Processes a single video file to decide if it should be transcoded 
+    /// Processes a single video file to decide if it should be transcoded
     /// (based on size, codec, extension, etc.), and invokes ParseVideoAsync if needed.
     /// </summary>
     /// <param name="filePath">Path to the video file to be processed.</param>
@@ -338,7 +338,7 @@ public class FFmpegEntry(
     }
 
     /// <summary>
-    /// Lists all available ffmpeg encoders by running 'ffmpeg -encoders', 
+    /// Lists all available ffmpeg encoders by running 'ffmpeg -encoders',
     /// and returns each line representing an encoder.
     /// </summary>
     /// <returns>A list of strings, each describing one encoder.</returns>
