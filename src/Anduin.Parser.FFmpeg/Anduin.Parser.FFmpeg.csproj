@@ -12,6 +12,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Aiursoft.CommandFramework" Version="10.0.2" />
-    <PackageReference Include="Aiursoft.CSTools" Version="10.0.1" />
+    <PackageReference Include="Aiursoft.CSTools" Version="10.0.2" />
   </ItemGroup>
 </Project>
