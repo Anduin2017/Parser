@@ -11,7 +11,7 @@
     <PackageId>Anduin.Parser.FFmpeg</PackageId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Aiursoft.CommandFramework" Version="10.0.4" />
+    <PackageReference Include="Aiursoft.CommandFramework" Version="10.0.5" />
     <PackageReference Include="Aiursoft.CSTools" Version="10.0.4" />
   </ItemGroup>
 </Project>
