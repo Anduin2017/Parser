@@ -28,7 +28,7 @@ public class CompressEntry(ILogger<CompressEntry> logger, ImageCompressor imageC
             var fileInfo = new FileInfo(file);
             if (fileInfo.Length > onlyIfPhotoLargerThanMb * 1024 * 1024)
             {
-                var compressedPath = await imageCompressor.CompressImage(file, scale);
+                var compressedPath = imageCompressor.CompressImage(file, scale);
                 logger.LogInformation("Compressed photo {File} to {CompressedPath}", file, compressedPath);
 
                 var originalSize = new FileInfo(file).Length;
