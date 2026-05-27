@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <Version>10.0.14</Version>
+    <Version>10.0.15</Version>
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>parser</AssemblyName>
     <RootNamespace>Anduin.Parser</RootNamespace>
@@ -35,7 +35,6 @@
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="." />
   </ItemGroup>
-
   <Target Name="RemovePdbsFromNupkg" AfterTargets="Pack">
     <Exec Command="zip -d &quot;$(PackageOutputPath)$(PackageId).$(PackageVersion).nupkg&quot; &quot;tools/*/*/runtimes/*/native/*.pdb&quot;" />
   </Target>
