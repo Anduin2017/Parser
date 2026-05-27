@@ -35,4 +35,8 @@
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="." />
   </ItemGroup>
+
+  <Target Name="RemovePdbsFromNupkg" AfterTargets="Pack">
+    <Exec Command="zip -d &quot;$(PackageOutputPath)$(PackageId).$(PackageVersion).nupkg&quot; &quot;tools/*/*/runtimes/*/native/*.pdb&quot;" />
+  </Target>
 </Project>
