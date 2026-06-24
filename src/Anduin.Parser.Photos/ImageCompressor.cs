@@ -39,10 +39,11 @@ public class ImageCompressor
         using var canvas = new SKCanvas(resized);
         using var paint = new SKPaint();
         paint.IsAntialias = true;
-        canvas.DrawBitmap(bitmap,
-            new SKRect(0, 0, bitmap.Width, bitmap.Height),
-            new SKRect(0, 0, newWidth, newHeight),
-            paint);
+canvas.DrawImage(SKImage.FromBitmap(bitmap),
+                    new SKRect(0, 0, bitmap.Width, bitmap.Height),
+                    new SKRect(0, 0, newWidth, newHeight),
+                    SKSamplingOptions.Default,
+                    paint);
         canvas.Flush();
 
         var format = Path.GetExtension(destinationPath).ToLowerInvariant() switch
